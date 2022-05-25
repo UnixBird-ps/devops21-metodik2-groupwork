@@ -1,5 +1,9 @@
+# Ignore docker-tools folder and start and stop scripts
+/docker-tools
+/start
+/stop
 
-# Mac crap
+# Remove annoying hidden Mac files
 .DS_Store
 
 # Logs
