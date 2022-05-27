@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Show branch name
-      run: echo ${{ }}
+      run: echo ${{ env.BRANCH }}
     - name: Checkout
       uses: actions/checkout@v2
     - name: Login to Docker Hub
