@@ -1,5 +1,5 @@
 
-# Main page. Static HTML-file with iframes.
+# Main webpage. Static HTML with iframes.
 
 
 # What image should we base our image on?
