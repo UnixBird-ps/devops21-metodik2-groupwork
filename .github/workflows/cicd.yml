@@ -5,7 +5,6 @@ name: CICD
 on:
   # Triggers the workflow on push or pull request events but only for the specified branches
   push:
-    branches: [ template-dev-start, template-prod-start, template-dev, template-prod, dev-*, prod-* ]
   pull_request:
     branches: [ template-dev, template-prod, dev-iframer, dev-world-map, dev-country-info, dev-capitals, prod-iframer, prod-world-map, prod-country-info, prod-capitals ]
 
@@ -44,19 +43,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Info message
+        run: echo "WARNING! This job has no tests yet."
 
   test-rest:
     name: Run REST API tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Info message
+        run: echo "WARNING! This job has no tests yet."
 
   test-bdd:
     name: Run BDD tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Info message
+        run: echo "WARNING! This job has no tests yet."
 
+  # This job is using actions from Docker
   build-and-push-dev:
     name: Build and push dev image to Docker Hub
     needs: [ set-vars, test-unit, test-rest, test-bdd ]
