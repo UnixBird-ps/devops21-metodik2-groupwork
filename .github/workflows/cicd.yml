@@ -16,12 +16,9 @@ env:
 jobs:
   prep:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: .
     # Set an env var that holds the name of what team folder we should use in a later job
     steps:
+      - uses: actions/checkout@v2
       - if: github.ref_name == 'dev-iframer' || github.ref_name == 'prod-iframer'
         env:
           TEAM_DIR: 'iframer'
