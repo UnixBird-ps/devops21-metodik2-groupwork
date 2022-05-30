@@ -62,13 +62,10 @@ jobs:
     needs: [ set-vars, test-unit, test-rest, test-bdd ]
     # Check if we are on one of the main dev branches
     if: |
-      github.event_name == 'pull_request' && github.ref_type == 'branch' &&
-      (
-        github.ref_name == 'dev-iframer' ||
-        github.ref_name == 'dev-world-map' ||
-        github.ref_name == 'dev-country-info' ||
-        github.ref_name == 'dev-capitals'
-      )
+      github.ref == 'refs/heads/dev-iframer' ||
+      github.ref == 'refs/heads/dev-world-map' ||
+      github.ref == 'refs/heads/dev-country-info' ||
+      github.ref == 'refs/heads/dev-capitals'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -98,23 +95,23 @@ jobs:
       PORT: ${{ secrets.DEV_APP_PORT }}
       DEV_SSH_HOST: ${{ secrets.DEV_SSH_HOST }}
     steps:
-    - name: Check if development server is defined
-      if: "${{ env.DEV_SSH_HOST == '' }}"
-      run: exit 1
-    - name: Setup SSH
-      env:
-        DEV_SSH_USER: ${{ secrets.DEV_SSH_USER }}
-        DEV_SSH_PORT: ${{ secrets.DEV_SSH_PORT }}
-        DEV_SSH_KEY: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
-      run: |
-        mkdir -p ~/.ssh/
-        echo "$DEV_SSH_KEY" > ~/.ssh/dev.key
-        chmod 600 ~/.ssh/dev.key
-        cat >~/.ssh/config <<_EOF_
-        Host dev
-          HostName $DEV_SSH_HOST
-          User $DEV_SSH_USER
-          Port $DEV_SSH_PORT
-          IdentityFile ~/.ssh/dev.key
-          StrictHostKeyChecking no
-        _EOF_
+      - name: Check if development server is defined
+        if: "${{ env.DEV_SSH_HOST == '' }}"
+        run: exit 1
+      - name: Setup SSH
+        env:
+          DEV_SSH_USER: ${{ secrets.DEV_SSH_USER }}
+          DEV_SSH_PORT: ${{ secrets.DEV_SSH_PORT }}
+          DEV_SSH_KEY: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$DEV_SSH_KEY" > ~/.ssh/dev.key
+          chmod 600 ~/.ssh/dev.key
+          cat >~/.ssh/config <<_EOF_
+          Host dev
+            HostName $DEV_SSH_HOST
+            User $DEV_SSH_USER
+            Port $DEV_SSH_PORT
+            IdentityFile ~/.ssh/dev.key
+            StrictHostKeyChecking no
+          _EOF_
