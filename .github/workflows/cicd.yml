@@ -18,19 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     # Set an env var that holds the name of what team folder we should use in a later job
     steps:
-      - uses: actions/checkout@v2
       - if: github.ref_name == 'dev-iframer' || github.ref_name == 'prod-iframer'
-        env:
-          TEAM_DIR: 'iframer'
+        run: echo "TEAM_DIR=iframer" >> $GITHUB_ENV
       - if: github.ref_name == 'dev-world-map' || github.ref_name == 'prod-world-map'
-        env:
-          TEAM_DIR: 'world-map'
+        run: echo "TEAM_DIR=world-map" >> $GITHUB_ENV
       - if: github.ref_name == 'dev-country-info' || github.ref_name == 'prod-country-info'
-        env:
-          TEAM_DIR: 'country-info'
+        run: echo "TEAM_DIR=country-info" >> $GITHUB_ENV
       - if: github.ref_name == 'dev-capitals' || github.ref_name == 'prod-capitals'
-        env:
-          TEAM_DIR: 'capitals'
+        run: echo "TEAM_DIR=capitals" >> $GITHUB_ENV
 
   test-unit:
     name: Run unit tests
