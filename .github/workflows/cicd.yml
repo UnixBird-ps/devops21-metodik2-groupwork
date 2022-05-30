@@ -23,7 +23,7 @@ jobs:
   build-and-push-dev:
     name: Build and push dev image to Docker Hub
     needs: [ test-unit ]
-    # Check if we are on a dev* branch
+    # Check if we are on one of the main dev branches
     if: |
       github.ref_type == 'branch' &&
       (
