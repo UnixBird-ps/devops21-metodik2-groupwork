@@ -27,16 +27,16 @@ jobs:
         run: |
           if [[ ${{ env.BRANCH }} == 'dev-iframer' ]] || [[ env.BRANCH == 'prod-iframer' ]]
           then
-            "echo ::set-output name=TEAM_DIR::iframer"
+            echo "::set-output name=TEAM_DIR::iframer"
           elif [[ ${{ env.BRANCH }} == 'dev-world-map' ]] || [[ env.BRANCH == 'prod-world-map' ]]
           then
-            "echo ::set-output name=TEAM_DIR::world-map"
+            echo "::set-output name=TEAM_DIR::world-map"
           elif [[ ${{ env.BRANCH }} == 'dev-country-info' ]] || [[ env.BRANCH == 'prod-country-info' ]]
           then
-            "echo ::set-output name=TEAM_DIR::country-info"
+            echo "::set-output name=TEAM_DIR::country-info"
           elif [[ ${{ env.BRANCH }} == 'dev-capitals' ]] || [[ env.BRANCH == 'prod-capitals' ]]
           then
-            "echo ::set-output name=TEAM_DIR::capitals"
+            echo "::set-output name=TEAM_DIR::capitals"
           fi
 
   test-unit:
