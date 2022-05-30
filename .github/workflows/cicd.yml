@@ -14,15 +14,40 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+
+  # Set an env var that holds the name of what team folder we should use in a later job
+  set-vars:
+    name: Set env vars
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.TEAM_DIR }}
+    steps:
+      - id: step1
+        shell: bash
+        run: |
+          if [[ ${{ env.BRANCH }} == 'dev-iframer' ]] || [[ env.BRANCH == 'prod-iframer' ]]
+          then
+            echo "::set-output name=TEAM_DIR::iframer"
+          elif [[ ${{ env.BRANCH }} == 'dev-world-map' ]] || [[ env.BRANCH == 'prod-world-map' ]]
+          then
+            echo "::set-output name=TEAM_DIR::world-map"
+          elif [[ ${{ env.BRANCH }} == 'dev-country-info' ]] || [[ env.BRANCH == 'prod-country-info' ]]
+          then
+            echo "::set-output name=TEAM_DIR::country-info"
+          elif [[ ${{ env.BRANCH }} == 'dev-capitals' ]] || [[ env.BRANCH == 'prod-capitals' ]]
+          then
+            echo "::set-output name=TEAM_DIR::capitals"
+          fi
+
   test-unit:
     name: Run unit tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
   build-and-push-dev:
     name: Build and push dev image to Docker Hub
-    needs: [ test-unit ]
+    needs: [ set-vars, test-unit ]
     # Check if we are on one of the main dev branches
     if: |
       github.ref_type == 'branch' &&
@@ -34,19 +59,18 @@ jobs:
       )
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build and push
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ./Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2:${{ env.BRANCH }}-latest
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ needs.set-vars.outputs.output1 }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2:${{ env.BRANCH }}-latest
