@@ -18,6 +18,7 @@ jobs:
   # Set an env var that holds the name of what team folder we should use in a later job
   set-vars:
     name: Set env vars
+    runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.step1.outputs.TEAM_DIR }}
     steps:
