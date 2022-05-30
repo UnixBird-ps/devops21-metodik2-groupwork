@@ -5,7 +5,6 @@ name: CICD
 on:
   # Triggers the workflow on push or pull request events but only for the specified branches
   push:
-    branches: [ template-dev-start, template-prod-start, template-dev, template-prod, dev-*, prod-* ]
   pull_request:
     branches: [ template-dev, template-prod, dev-iframer, dev-world-map, dev-country-info, dev-capitals, prod-iframer, prod-world-map, prod-country-info, prod-capitals ]
 
@@ -44,31 +43,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Info message
+        run: echo "WARNING! This job has no tests yet."
 
   test-rest:
     name: Run REST API tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Info message
+        run: echo "WARNING! This job has no tests yet."
 
   test-bdd:
     name: Run BDD tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Info message
+        run: echo "WARNING! This job has no tests yet."
 
+  # This job is using actions from Docker
   build-and-push-dev:
     name: Build and push dev image to Docker Hub
     needs: [ set-vars, test-unit, test-rest, test-bdd ]
     # Check if we are on one of the main dev branches
     if: |
-      github.event_name == 'pull_request' && github.ref_type == 'branch' &&
-      (
-        github.ref_name == 'dev-iframer' ||
-        github.ref_name == 'dev-world-map' ||
-        github.ref_name == 'dev-country-info' ||
-        github.ref_name == 'dev-capitals'
-      )
+      github.ref == 'refs/heads/dev-iframer' ||
+      github.ref == 'refs/heads/dev-world-map' ||
+      github.ref == 'refs/heads/dev-country-info' ||
+      github.ref == 'refs/heads/dev-capitals'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -83,11 +86,14 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
+          # Here we're setting the context for the build to the var we created in set-vars job
           context: ${{ needs.set-vars.outputs.output1 }}
           push: true
+          # Set the repo, name and tag of the docker image that we're pushing to Docker Hub
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2:${{ env.BRANCH }}-latest
 
   pull-and-deploy-dev:
+    # Set SSH conf, connect to the deployment server and pull and deploy the image
     name: Pull and deploy dev image to server
     needs: [ build-and-push-dev ]
     runs-on: ubuntu-latest
@@ -95,23 +101,23 @@ jobs:
       PORT: ${{ secrets.DEV_APP_PORT }}
       DEV_SSH_HOST: ${{ secrets.DEV_SSH_HOST }}
     steps:
-    - name: Check if development server is defined
-      if: "${{ env.DEV_SSH_HOST == '' }}"
-      run: exit 1
-    - name: Setup SSH
-      env:
-        DEV_SSH_USER: ${{ secrets.DEV_SSH_USER }}
-        DEV_SSH_PORT: ${{ secrets.DEV_SSH_PORT }}
-        DEV_SSH_KEY: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
-      run: |
-        mkdir -p ~/.ssh/
-        echo "$DEV_SSH_KEY" > ~/.ssh/dev.key
-        chmod 600 ~/.ssh/dev.key
-        cat >~/.ssh/config <<_EOF_
-        Host dev
-          HostName $DEV_SSH_HOST
-          User $DEV_SSH_USER
-          Port $DEV_SSH_PORT
-          IdentityFile ~/.ssh/dev.key
-          StrictHostKeyChecking no
-        _EOF_
+      - name: Check if development server is defined
+        if: "${{ env.DEV_SSH_HOST == '' }}"
+        run: exit 1
+      - name: Setup SSH
+        env:
+          DEV_SSH_USER: ${{ secrets.DEV_SSH_USER }}
+          DEV_SSH_PORT: ${{ secrets.DEV_SSH_PORT }}
+          DEV_SSH_KEY: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$DEV_SSH_KEY" > ~/.ssh/dev.key
+          chmod 600 ~/.ssh/dev.key
+          cat >~/.ssh/config <<_EOF_
+          Host dev
+            HostName $DEV_SSH_HOST
+            User $DEV_SSH_USER
+            Port $DEV_SSH_PORT
+            IdentityFile ~/.ssh/dev.key
+            StrictHostKeyChecking no
+          _EOF_
