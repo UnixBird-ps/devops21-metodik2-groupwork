@@ -7,7 +7,7 @@ on:
   push:
     branches: [ dev-*, prod-* ]
   pull_request:
-    branches: [ dev-iframer, dev-world-map, dev-country-info, dev-capitals, prod-iframer, prod-world-map, prod-country-info, prod-capitals ]
+    branches: [ template-dev, template-prod, dev-iframer, dev-world-map, dev-country-info, dev-capitals, prod-iframer, prod-world-map, prod-country-info, prod-capitals ]
 
 env:
   BRANCH: ${{ github.ref_name }}
