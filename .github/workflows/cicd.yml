@@ -19,15 +19,25 @@ jobs:
   set-vars:
     name: Set env vars
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.TEAM_DIR }}
     steps:
-      - if: env.BRANCH == 'dev-iframer' || env.BRANCH == 'prod-iframer'
-        run: "echo ::set-env name=TEAM_DIR::iframer"
-      - if: env.BRANCH == 'dev-world-map' || env.BRANCH == 'prod-world-map'
-        run: "echo ::set-env name=TEAM_DIR::world-map"
-      - if: env.BRANCH == 'dev-country-info' || env.BRANCH == 'prod-country-info'
-        run: "echo ::set-env name=TEAM_DIR::country-info"
-      - if: env.BRANCH == 'dev-capitals' || env.BRANCH == 'prod-capitals'
-        run: "echo ::set-env name=TEAM_DIR::capitals"
+      - id: step1
+        shell: bash
+        run: |
+          if [[ ${{ env.BRANCH }} == 'dev-iframer' ]] || [[ env.BRANCH == 'prod-iframer' ]]
+          then
+            "echo ::set-output name=TEAM_DIR::iframer"
+          elif [[ ${{ env.BRANCH }} == 'dev-world-map' ]] || [[ env.BRANCH == 'prod-world-map' ]]
+          then
+            "echo ::set-output name=TEAM_DIR::world-map"
+          elif [[ ${{ env.BRANCH }} == 'dev-country-info' ]] || [[ env.BRANCH == 'prod-country-info' ]]
+          then
+            "echo ::set-output name=TEAM_DIR::country-info"
+          elif [[ ${{ env.BRANCH }} == 'dev-capitals' ]] || [[ env.BRANCH == 'prod-capitals' ]]
+          then
+            "echo ::set-output name=TEAM_DIR::capitals"
+          fi
 
   test-unit:
     name: Run unit tests
@@ -61,7 +71,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ${{ env.TEAM_DIR }}
-          file: ./Dockerfile
+          context: ${{ needs.set-vars.outputs.output1 }}
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2:${{ env.BRANCH }}-latest
