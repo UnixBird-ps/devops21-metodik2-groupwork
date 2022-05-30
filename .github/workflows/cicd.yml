@@ -14,18 +14,20 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  prep:
+
+  # Set an env var that holds the name of what team folder we should use in a later job
+  set-vars:
+    name: Set env vars
     runs-on: ubuntu-latest
-    # Set an env var that holds the name of what team folder we should use in a later job
     steps:
-      - if: github.ref_name == 'dev-iframer' || github.ref_name == 'prod-iframer'
-        run: echo "TEAM_DIR=iframer" >> $GITHUB_ENV
-      - if: github.ref_name == 'dev-world-map' || github.ref_name == 'prod-world-map'
-        run: echo "TEAM_DIR=world-map" >> $GITHUB_ENV
-      - if: github.ref_name == 'dev-country-info' || github.ref_name == 'prod-country-info'
-        run: echo "TEAM_DIR=country-info" >> $GITHUB_ENV
-      - if: github.ref_name == 'dev-capitals' || github.ref_name == 'prod-capitals'
-        run: echo "TEAM_DIR=capitals" >> $GITHUB_ENV
+      - if: env.BRANCH == 'dev-iframer' || env.BRANCH == 'prod-iframer'
+        run: "echo ::set-env name=TEAM_DIR::iframer"
+      - if: env.BRANCH == 'dev-world-map' || env.BRANCH == 'prod-world-map'
+        run: "echo ::set-env name=TEAM_DIR::world-map"
+      - if: env.BRANCH == 'dev-country-info' || env.BRANCH == 'prod-country-info'
+        run: "echo ::set-env name=TEAM_DIR::country-info"
+      - if: env.BRANCH == 'dev-capitals' || env.BRANCH == 'prod-capitals'
+        run: "echo ::set-env name=TEAM_DIR::capitals"
 
   test-unit:
     name: Run unit tests
@@ -35,7 +37,7 @@ jobs:
 
   build-and-push-dev:
     name: Build and push dev image to Docker Hub
-    needs: [ prep, test-unit ]
+    needs: [ set-vars, test-unit ]
     # Check if we are on one of the main dev branches
     if: |
       github.ref_type == 'branch' &&
