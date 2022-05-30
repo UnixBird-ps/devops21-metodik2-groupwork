@@ -1,0 +1,18 @@
+iframe {
+  border: 0
+}
+
+body {
+  margin:0;
+  background-color:#ccc;
+}
+
+iframe[name="worldMap"] {
+  width: 100vw;
+  height: 50vh;
+}
+
+iframe[name="countryInfo"]{
+  width: 50vw;
+  height: 50vh;
+}
