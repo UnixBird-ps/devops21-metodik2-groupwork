@@ -17,6 +17,8 @@ jobs:
   test-unit:
     name: Run unit tests
     runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
 
   build-and-push-dev:
     name: Build and push dev image to Docker Hub
