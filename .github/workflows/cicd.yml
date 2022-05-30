@@ -1,6 +1,5 @@
-# This is a basic workflow to help you get started with Actions
 
-name: CI CD
+name: CICD
 
 # Controls when the workflow will run
 on:
@@ -8,36 +7,59 @@ on:
   push:
     branches: [ dev-*, prod-* ]
   pull_request:
-    branches: [ dev-*, prod-* ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    branches: [ template-dev, template-prod, dev-iframer, dev-world-map, dev-country-info, dev-capitals, prod-iframer, prod-world-map, prod-country-info, prod-capitals ]
 
 env:
-  BRANCH: github.ref_name
+  BRANCH: ${{ github.ref_name }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  dev-build:
-    name: Build and push dev image to Docker Hub
-    if: startsWith( github.ref, 'refs/heads/dev-' )
+  prep:
+    runs-on: ubuntu-latest
+    # Set an env var that holds the name of what team folder we should use in a later job
+    steps:
+      - if: github.ref_name == 'dev-iframer' || github.ref_name == 'prod-iframer'
+        run: echo "TEAM_DIR=iframer" >> $GITHUB_ENV
+      - if: github.ref_name == 'dev-world-map' || github.ref_name == 'prod-world-map'
+        run: echo "TEAM_DIR=world-map" >> $GITHUB_ENV
+      - if: github.ref_name == 'dev-country-info' || github.ref_name == 'prod-country-info'
+        run: echo "TEAM_DIR=country-info" >> $GITHUB_ENV
+      - if: github.ref_name == 'dev-capitals' || github.ref_name == 'prod-capitals'
+        run: echo "TEAM_DIR=capitals" >> $GITHUB_ENV
+
+  test-unit:
+    name: Run unit tests
     runs-on: ubuntu-latest
     steps:
-    - name: Show branch name
-      run: echo ${{ }}
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build and push
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ./Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2:${{ env.BRANCH }}-latest
+      - uses: actions/checkout@v2
+
+  build-and-push-dev:
+    name: Build and push dev image to Docker Hub
+    needs: [ prep, test-unit ]
+    # Check if we are on one of the main dev branches
+    if: |
+      github.ref_type == 'branch' &&
+      (
+        github.ref_name == 'dev-iframer' ||
+        github.ref_name == 'dev-world-map' ||
+        github.ref_name == 'dev-country-info' ||
+        github.ref_name == 'dev-capitals'
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ env.TEAM_DIR }}
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2:${{ env.BRANCH }}-latest
