@@ -7,20 +7,31 @@ on:
   push:
     branches: [ dev-*, prod-* ]
   pull_request:
-    branches: [ dev-website, dev-worldmap, dev-countries, dev-cities, prod-website, prod-worldmap, prod-countries, prod-cities ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    branches: [ template-dev, template-prod, dev-iframer, dev-world-map, dev-country-info, dev-capitals, prod-iframer, prod-world-map, prod-country-info, prod-capitals ]
 
 env:
   BRANCH: ${{ github.ref_name }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  dev-build:
+  test-unit:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+  build-and-push-dev:
     name: Build and push dev image to Docker Hub
-    # Check if we are on a dev* branch
-    if: startsWith( github.ref, 'refs/heads/dev-' )
+    needs: [ test-unit ]
+    # Check if we are on one of the main dev branches
+    if: |
+      github.ref_type == 'branch' &&
+      (
+        github.ref_name == 'dev-iframer' ||
+        github.ref_name == 'dev-world-map' ||
+        github.ref_name == 'dev-country-info' ||
+        github.ref_name == 'dev-capitals'
+      )
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
