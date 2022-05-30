@@ -16,6 +16,8 @@ env:
 jobs:
   prep:
     runs-on: ubuntu-latest
+    defaults:
+      uses: actions/checkout@v2
     # Set an env var that holds the name of what team folder we should use in a later job
     steps:
       - if: github.ref_name == 'dev-iframer' || github.ref_name == 'prod-iframer'
