@@ -25,13 +25,15 @@ jobs:
     needs: [ test-unit ]
     # Check if we are on a dev* branch
     if: |
-      github.ref_type == "branch" &&
-      (
-        github.ref_name == "dev-iframer" ||
-        github.ref_name == "dev-world-map" ||
-        github.ref_name == "dev-country-info" ||
-        github.ref_name == "dev-capitals"
-      )
+      ${{
+        github.ref_type == "branch" &&
+        (
+          github.ref_name == "dev-iframer" ||
+          github.ref_name == "dev-world-map" ||
+          github.ref_name == "dev-country-info" ||
+          github.ref_name == "dev-capitals"
+        )
+      }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
