@@ -1,0 +1,11 @@
+version: '3'
+services:
+  mysql-docker:
+    image: mysql/mysql-server:latest
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: countries
+    ports:
+      - ${PORT}:${PORT}
+   
