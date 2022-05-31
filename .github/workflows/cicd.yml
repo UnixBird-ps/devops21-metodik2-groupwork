@@ -11,9 +11,6 @@ on:
 env:
   BRANCH: ${{ github.ref_name }}
 
-env:
-  DOCKER_IMAGE_FULL_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
@@ -88,6 +85,8 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Build and push
+        env:
+          DOCKER_IMAGE_FULL_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
         uses: docker/build-push-action@v2
         with:
           # Here we're setting the context for the build to the var we created in set-vars job
@@ -105,6 +104,7 @@ jobs:
     env:
       PORT: ${{ secrets.DEV_APP_PORT }}
       DEV_SSH_HOST: ${{ secrets.DEV_SSH_HOST }}
+      DOCKER_IMAGE_FULL_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
     steps:
       - name: Check if development server is defined
         if: env.DEV_SSH_HOST == ''
