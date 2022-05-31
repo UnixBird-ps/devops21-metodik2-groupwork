@@ -104,7 +104,6 @@ jobs:
     env:
       PORT: ${{ secrets.DEV_APP_PORT }}
       DEV_SSH_HOST: ${{ secrets.DEV_SSH_HOST }}
-      DOCKER_IMAGE_FULL_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
     steps:
       - name: Check if development server is defined
         if: env.DEV_SSH_HOST == ''
@@ -129,5 +128,7 @@ jobs:
             StrictHostKeyChecking no
           _EOF_
       - name: Pull docker image
+        env:
+          DOCKER_IMAGE_FULL_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
         run: |
           ssh dev "docker pull ${{ env.DOCKER_IMAGE_FULL_NAME }}"
