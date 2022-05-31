@@ -82,7 +82,7 @@ jobs:
       github.ref == 'refs/heads/dev-world-map-backend' ||
       github.ref == 'refs/heads/dev-country-info-backend' ||
       github.ref == 'refs/heads/dev-country-info-db' ||
-      github.ref == 'refs/heads/dev-capitals-backend'
+      github.ref == 'refs/heads/dev-capitals-backend' ||
       github.ref == 'refs/heads/dev-capitals-db'
     runs-on: ubuntu-latest
     steps:
