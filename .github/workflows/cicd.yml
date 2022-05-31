@@ -130,4 +130,4 @@ jobs:
         env:
           DOCKER_IMAGE_FULL_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
         run: |
-          ssh dev "cd ~/devops21-metodik2/${{ env.BRANCH }} ; pwd ; ls -al ; docker pull ${{ env.DOCKER_IMAGE_FULL_NAME }}"
+          ssh dev "cd ~/devops21-metodik2/${{ env.BRANCH }} ; [ -s docker-compose.yml ] && docker compose pull && docker compose up --detach"
