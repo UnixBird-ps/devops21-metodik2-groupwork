@@ -10,7 +10,7 @@ on:
 
 env:
   BRANCH: ${{ github.ref_name }}
-  DOCKER_IMAGE_FULL_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
+  DOCKER_IMAGE_FULL_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ BRANCH }}:latest
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -93,7 +93,7 @@ jobs:
           push: true
           # Set the repo, name and tag of the docker image that we're pushing to Docker Hub
           # tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
-          tags: ${{ DOCKER_IMAGE_FULL_NAME }}
+          tags: ${{ env.DOCKER_IMAGE_FULL_NAME }}
 
   pull-and-deploy-dev:
     # Generate SSH conf, connect to the deployment server and pull and deploy the image
@@ -105,7 +105,7 @@ jobs:
       DEV_SSH_HOST: ${{ secrets.DEV_SSH_HOST }}
     steps:
       - name: Check if development server is defined
-        if: "${{ env.DEV_SSH_HOST == '' }}"
+        if: env.DEV_SSH_HOST == ''
         run: |
           echo "DEV_SSH_HOST is undefined, bailing out!"
           exit 1
@@ -116,16 +116,16 @@ jobs:
           DEV_SSH_KEY: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh/
-          echo "$DEV_SSH_KEY" > ~/.ssh/dev.key
+          echo "${{ env.DEV_SSH_KEY }}" > ~/.ssh/dev.key
           chmod 600 ~/.ssh/dev.key
           cat >~/.ssh/config <<_EOF_
           Host dev
-            HostName $DEV_SSH_HOST
-            User $DEV_SSH_USER
-            Port $DEV_SSH_PORT
+            HostName ${{ env.DEV_SSH_HOST }}
+            User ${{ env.DEV_SSH_USER }}
+            Port ${{ env.DEV_SSH_PORT }}
             IdentityFile ~/.ssh/dev.key
             StrictHostKeyChecking no
           _EOF_
       - name: Pull docker image
         run: |
-          ssh dev "docker pull ${{ DOCKER_IMAGE_FULL_NAME }}"
+          ssh dev "docker pull ${{ env.DOCKER_IMAGE_FULL_NAME }}"
