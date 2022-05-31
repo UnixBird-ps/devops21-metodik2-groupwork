@@ -10,7 +10,9 @@ on:
 
 env:
   BRANCH: ${{ github.ref_name }}
-  DOCKER_IMAGE_FULL_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ BRANCH }}:latest
+
+env:
+  DOCKER_IMAGE_FULL_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
