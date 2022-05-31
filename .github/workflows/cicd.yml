@@ -30,13 +30,22 @@ jobs:
             echo "::set-output name=TEAM_DIR::iframer"
           elif [[ ${{ env.BRANCH }} == 'dev-world-map-backend' ]] || [[ env.BRANCH == 'prod-world-map-backend' ]]
           then
-            echo "::set-output name=TEAM_DIR::world-map"
+            echo "::set-output name=TEAM_DIR::world-map-backend"
+          elif [[ ${{ env.BRANCH }} == 'dev-world-map-db' ]] || [[ env.BRANCH == 'prod-world-map-db' ]]
+          then
+            echo "::set-output name=TEAM_DIR::world-map-db"
           elif [[ ${{ env.BRANCH }} == 'dev-country-info-backend' ]] || [[ env.BRANCH == 'prod-country-info-backend' ]]
           then
-            echo "::set-output name=TEAM_DIR::country-info"
+            echo "::set-output name=TEAM_DIR::country-info-backend"
+          elif [[ ${{ env.BRANCH }} == 'dev-country-info-db' ]] || [[ env.BRANCH == 'prod-country-info-db' ]]
+          then
+            echo "::set-output name=TEAM_DIR::country-info-db"
           elif [[ ${{ env.BRANCH }} == 'dev-capitals-backend' ]] || [[ env.BRANCH == 'prod-capitals-backend' ]]
           then
-            echo "::set-output name=TEAM_DIR::capitals"
+            echo "::set-output name=TEAM_DIR::capitals-backend"
+          elif [[ ${{ env.BRANCH }} == 'dev-capitals-db' ]] || [[ env.BRANCH == 'prod-capitals-db' ]]
+          then
+            echo "::set-output name=TEAM_DIR::capitals-db"
           fi
 
   test-unit:
@@ -70,9 +79,11 @@ jobs:
     # Check if we are on one of the main dev branches
     if: |
       github.ref == 'refs/heads/dev-iframer' ||
-      github.ref == 'refs/heads/dev-world-map' ||
-      github.ref == 'refs/heads/dev-country-info' ||
-      github.ref == 'refs/heads/dev-capitals'
+      github.ref == 'refs/heads/dev-world-map-backend' ||
+      github.ref == 'refs/heads/dev-country-info-backend' ||
+      github.ref == 'refs/heads/dev-country-info-db' ||
+      github.ref == 'refs/heads/dev-capitals-backend'
+      github.ref == 'refs/heads/dev-capitals-db'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
