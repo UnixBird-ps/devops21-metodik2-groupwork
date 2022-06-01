@@ -7,6 +7,8 @@ FROM php:8.1.6-apache-bullseye
 
 RUN docker-php-ext-install mysqli
 
+RUN mkdir /run/secrets
+
 # What to copy to the image from the host?
 #
 COPY ./frontend/ /var/www/html/
