@@ -9,6 +9,8 @@ RUN [ "npm", "install" ]
 
 COPY ./src/ /app/
 
+RUN [ "npm", "build" ]
+
 USER node
 
-CMD [ "node", "backend/index.js" ]
+CMD [ "npm", "start" ]
