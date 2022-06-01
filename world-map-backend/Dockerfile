@@ -9,7 +9,7 @@ RUN [ "npm", "install" ]
 
 COPY ./src/ /app/
 
-RUN [ "npm", "build" ]
+RUN [ "npm", "run", "build" ]
 
 USER node
 
