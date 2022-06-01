@@ -3,8 +3,12 @@ FROM node:lts-bullseye-slim
 
 WORKDIR /app
 
+COPY package*.json ./
+
 COPY ./src/ /app/
 
 USER node
 
-CMD ["node", "backend/index.js"]
+RUN [ "npm", "install" ]
+
+CMD [ "node", "backend/index.js" ]
