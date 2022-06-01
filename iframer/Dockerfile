@@ -7,4 +7,4 @@ FROM nginx:1.22.0-alpine
 
 # What to copy to the image from the host?
 #
-COPY ./frontend/* /usr/share/nginx/html/
+COPY ./frontend/ /usr/share/nginx/html/
