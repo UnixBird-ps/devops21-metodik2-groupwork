@@ -1,9 +1,3 @@
-<?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "mysql";
-    $database = "countries";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +14,8 @@
     error_reporting(E_ALL);
 
     // Create connection
-    $conn = new mysqli($servername, $username, $password);
+    // $conn = new mysqli($servername, $username, $password);
+    $conn = new mysqli( ini_get( "mysql.default.host" ), ini_get( "mysql.default.user" ), ini_get( "mysql.default.password" ) );
 
     // Check connection
     if ($conn->connect_error) {
