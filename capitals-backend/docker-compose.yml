@@ -1,0 +1,21 @@
+
+# dev-capitals-backend/docker-compose.yml
+
+services:
+  devops2-dev-capitals-backend:
+    container_name: devops2-dev-capitals-backend
+    hostname: devops2-dev-capitals-backend
+    image: unixbirdps/devops21-metodik2-dev-capitals-backend:latest
+    ports:
+      - "3205:80/tcp"
+    #networks:
+    #  - devops2-proxied-net
+    #  - devops2-db-net
+
+#networks:
+#  devops2-proxied-net:
+#    external: true
+#    name: devops2-proxied-net
+#  devops2-db-net:
+#    external: true
+#    name: devops2-db-net
