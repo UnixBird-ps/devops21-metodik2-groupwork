@@ -1,0 +1,18 @@
+
+# dev-iframer/docker-compose.yml
+
+services:
+  devops2-dev-iframer:
+    container_name: devops2-dev-iframer
+    hostname: devops2-dev-iframer
+    image: unixbirdps/devops21-metodik2-dev-iframer:latest
+    #network_mode: host
+    ports:
+      - "127.0.0.1:3201:80/tcp"
+    #networks:
+    #  - devops2-proxied-net
+
+#networks:
+#  devops2-proxied-net:
+#    external: true
+#    name: devops2-proxied-net
