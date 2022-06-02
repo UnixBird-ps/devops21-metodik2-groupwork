@@ -1,0 +1,23 @@
+
+# dev-country-info-backend/docker-compose.yml
+
+services:
+  devops2-dev-country-info-backend:
+    container_name: devops2-dev-country-info-backend
+    hostname: devops2-dev-country-info-backend
+    image: unixbirdps/devops21-metodik2-dev-country-info-backend:latest
+    ports:
+      - "127.0.0.1:3203:80/tcp"
+    volumes:
+      - ./secrets:/etc/apache2/secrets
+    #networks:
+    #  - devops2-proxied-net
+    #  - devops2-db-net
+
+#networks:
+#  devops2-proxied-net:
+#    external: true
+#    name: devops2-proxied-net
+#  devops2-db-net:
+#    external: true
+#    name: devops2-db-net
