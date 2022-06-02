@@ -1,3 +1,6 @@
+
+# dev-world-map-backend/docker-compose.yml
+
 services:
   devops2-dev-world-map-backend:
     container_name: devops2-dev-world-map-backend
@@ -7,3 +10,10 @@ services:
       PORT: 3202
     ports:
       - "127.0.0.1:3202:3202/tcp"
+    #networks:
+    #  - devops2-proxied-net
+
+#networks:
+#  devops2-proxied-net:
+#    external: true
+#    name: devops2-proxied-net
