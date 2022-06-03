@@ -1,23 +1,31 @@
-#!/bin/sh
+#!/bin/bash
 #set -e # exit on failed commands
 
+#echo ${ cd ${ dirname ${BASH_SOURCE[ 0 ]} } ; pwd -P }
+#echo $( cd $( dirname ${0} ) && pwd -P )
+
 # Get the dir path of the dir where this script is located
-DIRNAME=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+DIRNAME=$( cd $( dirname ${0} ) && pwd -P )
+echo $DIRNAME
 
 # Get the repo dir path
 REPO_DIR="$(dirname "$DIRNAME")"
+echo $REPO_DIR
 
 # Cd to the dir where this script is located
 cd $DIRNAME
 
 ### get the name of the repository
-REPO_NAME=$(basename -s .git `git config --get remote.origin.url`)
+REPO_NAME=$( basename -s .git $( git config --get remote.origin.url ) )
+echo "REPOOOO NAME $REPO_NAME"
 
 ## get the name of the checked out branch
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+echo $BRANCH_NAME
 
 ## dockerSettings.json file path
 DOCKER_SETTINGS_FILE="$REPO_DIR/dockerSettings.json"
+echo $
 
 if [ ! -f "$DOCKER_SETTINGS_FILE" ]; then
   echo ""
