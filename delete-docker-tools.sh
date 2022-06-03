@@ -3,7 +3,7 @@
 ## Copy docker-tools-template to docker-tools
 ## but keep old ssh-key sub folder...
 
-rm -r docker-tools
+#rm -r docker-tools
 rm start
 rm stop
 
