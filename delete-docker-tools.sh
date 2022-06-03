@@ -5,7 +5,7 @@
 
 [ ! -d ssh-key ] \
 && [ -d docker-tools/copy-to-docker-container/ssh-key ] \
-&& cp -r docker-tools/copy-to-docker-container/ssh-key ssh-key \
+&& cp --preserve=mode,timestamps -rf docker-tools/copy-to-docker-container/ssh-key ssh-key \
 && rm -r docker-tools
 
 rm start
