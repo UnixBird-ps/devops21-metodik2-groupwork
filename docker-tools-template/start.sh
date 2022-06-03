@@ -1,31 +1,23 @@
 #!/bin/bash
 #set -e # exit on failed commands
 
-#echo ${ cd ${ dirname ${BASH_SOURCE[ 0 ]} } ; pwd -P }
-#echo $( cd $( dirname ${0} ) && pwd -P )
-
 # Get the dir path of the dir where this script is located
-DIRNAME=$( cd $( dirname ${0} ) && pwd -P )
-echo $DIRNAME
+DIRNAME=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 # Get the repo dir path
 REPO_DIR="$(dirname "$DIRNAME")"
-echo $REPO_DIR
 
 # Cd to the dir where this script is located
 cd $DIRNAME
 
 ### get the name of the repository
-REPO_NAME=$( basename -s .git $( git config --get remote.origin.url ) )
-echo "REPOOOO NAME $REPO_NAME"
+REPO_NAME=$(basename -s .git `git config --get remote.origin.url`)
 
 ## get the name of the checked out branch
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-echo $BRANCH_NAME
 
 ## dockerSettings.json file path
 DOCKER_SETTINGS_FILE="$REPO_DIR/dockerSettings.json"
-echo $
 
 if [ ! -f "$DOCKER_SETTINGS_FILE" ]; then
   echo ""
@@ -56,17 +48,31 @@ docker volume create $REPO_NAME-storage
 # build image from Dockerfile
 docker build -f git-cloner.Dockerfile -t $REPO_NAME-git-cloner .
 
-### run image as container
+### run the git cloner image as container
 docker run \
 --name $REPO_NAME-git-cloner \
 --mount type=bind,source="$DIRNAME/copy-to-docker-container",target=/app \
 -v $REPO_NAME-storage:/storage \
 -e GIT_REPO_URL=$(git remote get-url origin) \
--e GIT_USERNAME=$(git config --global user.name) \
--e GIT_EMAIL=$(git config --global user.email) \
+-e GIT_USERNAME="$(git config --global user.name)" \
+-e GIT_EMAIL="$(git config --global user.email)" \
 -e GIT_REPO_NAME=$REPO_NAME \
 -e GIT_BRANCH_NAME=$BRANCH_NAME \
 $REPO_NAME-git-cloner
+
+### start the syncer container
+### build image from Dockerfile
+docker build -f syncer.Dockerfile -t $REPO_NAME-syncer .
+
+### run the syncer image as container
+echo ""
+echo "Starting syncer!"
+docker run -d \
+--name $REPO_NAME-syncer \
+--mount type=bind,source="$DIRNAME/copy-to-docker-container",target=/app \
+--mount type=bind,source="$REPO_DIR",target=/repo-bind-mount \
+-v $REPO_NAME-storage:/storage \
+$REPO_NAME-syncer
 
 if [ $? -ne 0 ]; then
   # There was an error with git cloner
@@ -92,7 +98,7 @@ echo ""
 ### that runs docker (mounted as a socket)
 ### and docker and docker compose commands inside it
 ### Run docker compose on dynamically created yml file.
-#
+
 ### Important: We mount a unix socket that makes the Docker CLI
 ### in the container use the Docker daemon on the host...
 ### unix sockets must be written with one start slash in MacOS/Linux
@@ -115,19 +121,6 @@ sh -c "cd /storage/branches && export COMPOSE_PROJECT_NAME=$REPO_NAME && docker-
 echo ""
 echo "REMOVING THE CONTAINER $REPO_NAME-composer-runner"
 docker container rm -f $REPO_NAME-composer-runner
-
-### start the currently checked out branch in a container with a bind mount
-### if it has Dockerfile
-cd "$REPO_DIR";
-if [ -f "Dockerfile" ]; then
-  docker build -t $REPO_NAME-bind-mount-$BRANCH_NAME .
-  docker run \
-  --name $REPO_NAME-bind-mount-$BRANCH_NAME \
-  --mount type=bind,source="$REPO_DIR",target=/app \
-  -v $REPO_NAME-storage:/storage \
-  -w /app \
-  $REPO_NAME-bind-mount-$BRANCH_NAME
-fi
 
 ### we are done
 echo ""

@@ -1,9 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-## Copy docker-tools-template to docker-tools
-## but keep old ssh-key sub folder...
+# Remove docker-tools only if we already have the ssh-key
+[ -d ssh-key ] && rm -r docker-tools
 
-#rm -r docker-tools
+[ ! -d ssh-key ] \
+&& [ -d docker-tools/copy-to-docker-container/ssh-key ] \
+&& cp --preserve=mode,timestamps -rf docker-tools/copy-to-docker-container/ssh-key ssh-key \
+&& rm -r docker-tools
+
 rm start
 rm stop
 

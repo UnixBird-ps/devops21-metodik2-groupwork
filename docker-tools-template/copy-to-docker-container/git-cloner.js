@@ -1,8 +1,6 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
-console.log("HELA ENVIRONMENT", process.env)
-
 const {
   GIT_REPO_NAME: gitRepoName,
   GIT_BRANCH_NAME: gitBranchName,
@@ -10,9 +8,6 @@ const {
   GIT_USERNAME: gitUsername,
   GIT_EMAIL: gitEmail
 } = process.env;
-
-
-
 
 const gitRepoSsh = 'git@github.com:'
   + gitRepoUrl.split(':').join('/').split('github.com/')[1];
@@ -177,20 +172,10 @@ function buildComposeFile() {
   for (let { branch, hostPort, port } of dockerSettings) {
 
     // for now use the hostPort (if it exists) as internal port
-    // the vite developer server gets confused otherwise
-    // looking for a solution to this
+    // the vite developer server gets confused otherwise...
     port = hostPort || port;
 
     if (fs.existsSync(`/storage/branches/${branch}/Dockerfile`)) {
-      let bind = gitBranchName === branch;
-      if (bind) {
-        // Binding from Docker in Docker to a volume on windows
-        // does not seem to work...
-        // (even if we re-parse the path to posix/linux)
-        // so let us create the container with a bind-mount
-        // later in our start.sh script
-        continue;
-      }
       let name = gitRepoName + '-' + branch;
       let workingDir = `/storage/branches/${branch}`;
       yml = [
