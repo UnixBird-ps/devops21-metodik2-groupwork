@@ -5,25 +5,29 @@
   ],
   "dev-iframer",
   [
+    "/",
     4001
   ],
   "dev-world-map-backend",
   [
+    "/",
     4002
-  ],
-  "dev-country-info-db",
-  [
-    4003
   ],
   "dev-country-info-backend",
   [
+    "/",
+    4003
+  ],
+  "dev-capitals-backend",
+  [
+    "/",
     4004
   ],
-  "dev-capitals-db",
+  "dev-country-info-db",
   [
     4005
   ],
-  "dev-capitals-backend",
+  "dev-capitals-db",
   [
     4006
   ]

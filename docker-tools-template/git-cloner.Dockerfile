@@ -8,5 +8,5 @@ RUN apt install git
 # Set a work dir (working directory)
 WORKDIR /app
 
-# Run the git-cloner.js file from copy-to-docker-container
+# Run the git-cloner.js file from git-cloner-docker-container
 CMD node git-cloner.js

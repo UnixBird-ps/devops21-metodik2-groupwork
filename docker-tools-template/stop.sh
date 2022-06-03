@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Get the dir path of the dir where this script is located
 DIRNAME=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
