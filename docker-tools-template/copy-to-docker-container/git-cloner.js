@@ -1,6 +1,8 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
+console.log("HELA ENVIRONMENT", process.env)
+
 const {
   GIT_REPO_NAME: gitRepoName,
   GIT_BRANCH_NAME: gitBranchName,
@@ -9,8 +11,11 @@ const {
   GIT_EMAIL: gitEmail
 } = process.env;
 
+
+
+
 const gitRepoSsh = 'git@github.com:'
-  + gitRepoUrl.split('github.com/')[1];
+  + gitRepoUrl.split(':').join('/').split('github.com/')[1];
 
 const dockerSettings = readAndParseDockerSettings();
 
