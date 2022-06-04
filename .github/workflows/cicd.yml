@@ -101,7 +101,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           # Here we're setting the context for the build to the var we created in set-vars job
-          context: ${{ needs.set-vars.outputs.output1 }}
+          # context: ${{ needs.set-vars.outputs.output1 }}
+          context: .
           push: true
           # Set the repo, name and tag of the docker image that we're pushing to Docker Hub
           # tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
