@@ -1,20 +1,18 @@
-#!/bin/sh
-
-## Copy docker-tools-template to docker-tools
-## but keep old ssh-key sub folder...
+#!/bin/bash
 
 chmod 700 ./docker-tools-template/start.sh
 chmod 700 ./docker-tools-template/stop.sh
 
-[ -d docker-tools/copy-to-docker-container/ssh-key ] \
-&& cp --preserve=mode,timestamps -rf docker-tools/copy-to-docker-container/ssh-key ssh-key
+## Copy docker-tools-template to docker-tools
+## but keep old ssh-key sub folder...
 
-[ -d ssh-key ] && rm -r docker-tools
+[ -f docker-tools/copy-to-docker-container/ssh-key/id_ed25519.pub ] \
+&& [ -f docker-tools/copy-to-docker-container/ssh-key/id_ed25519 ] \
+&& cp --preserve=mode,timestamps -rf docker-tools/copy-to-docker-container/ssh-key ssh-key 2> /dev/null
 
-cp -r --preserve=mode,timestamps docker-tools-template docker-tools
+rm -rf docker-tools 2> /dev/null
 
-[ -d ssh-key ] \
-&& cp -r --preserve=mode,timestamps ssh-key docker-tools/copy-to-docker-container/
+cp -r --preserve=mode,timestamps docker-tools-template docker-tools 2> /dev/null
 
 echo "./docker-tools/start.sh" > start
 echo "./docker-tools/stop.sh" > stop
