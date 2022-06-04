@@ -15,7 +15,6 @@
 
     // Create connection
     // $conn = new mysqli($servername, $username, $password);
-    //$conn = new mysqli( ini_get( 'mysql.default.host' ), ini_get( 'mysql.default.user' ), ini_get( 'mysql.default.password' ) );
     $conn = new mysqli();
 
     // Check connection
