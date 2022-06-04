@@ -1,14 +1,14 @@
 
 server
 {
-   listen 4000 default_server;
+   listen ${NGINX_PORT} default_server;
    #server_name _;
 
    location /
    {
       proxy_http_version 1.1;
       #proxy_set_header "Connection" "";
-      proxy_pass http://127.0.0.1:4001;
+      proxy_pass http://127.0.0.1:${IFRAMER_PORT}/;
       #proxy_redirect     off;
       #proxy_set_header   Host $host;
    }
@@ -17,7 +17,7 @@ server
    {
       #proxy_http_version 1.1;
       rewrite ^/world-map/(.*) /$1 break;
-      proxy_pass http://127.0.0.1:4002/;
+      proxy_pass http://127.0.0.1:${WORLD_MAP_PORT}/;
       #proxy_set_header   Host $host;
       #proxy_set_header "Connection" "";
 
@@ -36,7 +36,7 @@ server
    {
       #proxy_http_version 1.1;
       rewrite ^/country-info/(.*) /$1 break;
-      proxy_pass http://127.0.0.1:4003/;
+      proxy_pass http://127.0.0.1:${COUNTRY_INFO_PORT}/;
       proxy_set_header   Host $host;
       #proxy_set_header "Connection" "";
    }
@@ -45,15 +45,9 @@ server
    {
       #proxy_http_version 1.1;
       rewrite ^/capitals/(.*) /$1 break;
-      proxy_pass http://127.0.0.1:4005/;
+      proxy_pass http://127.0.0.1:${CAPITALS_PORT}/;
       proxy_set_header   Host $host;
       #proxy_set_header "Connection" "";
    }
 
-   if ( $scheme = "http" )
-   {
-      return 301 https://$server_name$request_uri;
-   }
-
-   listen 443 ssl;
 }
