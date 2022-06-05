@@ -184,6 +184,7 @@ function buildComposeFile() {
         `    container_name: ${name}`,
         `    build: /storage/branches/${branch}`,
         `    working_dir: ${workingDir}`,
+        `    network_mode: host`,
         `    ports:`,
         `      - "${hostPort}:${port}"`,
         `    volumes:`,
