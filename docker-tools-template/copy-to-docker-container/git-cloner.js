@@ -40,6 +40,7 @@ function readAndParseDockerSettings() {
     .map(x => typeof x === 'string' ? { branch: x, routes: [] } : x)
     .filter((x, i, a) => x instanceof Array ?
       (a[i - 1].routes = x) && false : true);
+
   let port = 3000;
   for (let x of ds) {
     let hostPort = x.routes.find(x => typeof x === 'number');
