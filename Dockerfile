@@ -6,11 +6,11 @@ WORKDIR /app
 
 COPY ./world-map-src/package*.json /app/
 
+RUN [ "ls", "-alF" ]
+
 RUN [ "npm", "install" ]
 
 COPY ./world-map-src/ /app/
-
-RUN [ "npm", "run", "build" ]
 
 USER node
 
