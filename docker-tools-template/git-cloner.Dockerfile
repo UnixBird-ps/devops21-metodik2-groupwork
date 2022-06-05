@@ -1,9 +1,11 @@
-# start with a debian node container
-FROM node:16.15-buster
+
+# If Debian
+#FROM node:16.15-buster
+FROM node:16.15.0-bullseye-slim
 
 # Install git
-RUN apt update
-RUN apt install git
+RUN apt-get update
+RUN apt-get -y install git
 
 # Set a work dir (working directory)
 WORKDIR /app

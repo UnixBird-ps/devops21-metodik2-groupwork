@@ -1,5 +1,5 @@
 [
-  "dev-proxy",
+  "dev-proxy-work-ps",
   [
     4000
   ],
@@ -8,27 +8,19 @@
     "/",
     4001
   ],
-  "dev-world-map-backend",
+  "dev-world-map-backend-work-ps",
   [
     "/",
     4002
   ],
-  "dev-country-info-backend",
+  "dev-country-info-backend-work-ps",
   [
     "/",
     4003
   ],
-  "dev-capitals-backend",
+  "dev-country-info-db-work-ps",
   [
     "/",
     4004
-  ],
-  "dev-country-info-db",
-  [
-    4005
-  ],
-  "dev-capitals-db",
-  [
-    4006
   ]
 ]
