@@ -1,21 +1,18 @@
 [
-  "dev-proxy",
+  "dev-proxy-work-ps",
   [
     4000
   ],
   "dev-iframer",
   [
-    "/",
     4001
   ],
   "dev-world-map-backend-work-ps",
   [
-    "/",
     4002
   ],
   "dev-country-info-backend-work-ps",
   [
-    "/",
     4003
   ],
   "dev-country-info-db-work-ps",
