@@ -10,12 +10,10 @@ RUN [ "npm", "install" ]
 
 COPY ./world-map-src/ /app/
 
-#RUN [ "npm", "run", "build" ]
-
-RUN [ "ls", "-alF", "/app/" ]
+RUN [ "npm", "run", "build" ]
 
 USER node
 
-#CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "dev" ]
 
-CMD [ "node", "/app/backend-dummy/" ]
+#CMD [ "node", "/app/backend-dummy/" ]
