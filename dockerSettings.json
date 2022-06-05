@@ -1,9 +1,9 @@
 [
-  "dev-proxy-work-ps",
+  "dev-proxy",
   [
     4000
   ],
-  "dev-iframer-work-ps",
+  "dev-iframer",
   [
     "/",
     4001
