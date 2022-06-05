@@ -4,8 +4,8 @@
    "version": "0.0.0",
    "scripts": {
       "start": "node backend/index.js",
-      "dev": "vite",
-      "build": "vite build --base=/public",
+      "dev": "vite --host",
+      "build": "vite build",
       "preview": "vite preview"
    },
    "dependencies": {
