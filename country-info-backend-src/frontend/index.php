@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=<, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Country Info</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -15,7 +15,6 @@
 
     // Create connection
     // $conn = new mysqli($servername, $username, $password);
-    //$conn = new mysqli( ini_get( 'mysql.default.host' ), ini_get( 'mysql.default.user' ), ini_get( 'mysql.default.password' ) );
     $conn = new mysqli();
 
     // Check connection
