@@ -186,7 +186,7 @@ function buildComposeFile() {
         `    working_dir: ${workingDir}`,
         `    network_mode: host`,
         `    ports:`,
-        `      - "${hostPort}:${port}"`,
+        `      - "127.0.0.1:${hostPort}:${port}"`,
         `    volumes:`,
         `      - ${gitRepoName}-storage:/storage`,
         `    environment:`,
