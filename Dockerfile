@@ -3,7 +3,7 @@ FROM nginx:1.21.6
 
 RUN rm /usr/share/nginx/html/*
 
-COPY ./nginx-conf-source/*.conf /etc/nginx/conf.d/
+COPY ./nginx-conf-source/*.conf.template /etc/nginx/templates/
 
 ENV NGINX_PORT=4000
 ENV IFRAMER_PORT=4001
