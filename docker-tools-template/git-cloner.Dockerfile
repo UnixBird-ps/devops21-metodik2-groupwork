@@ -1,17 +1,11 @@
 
 # If Debian
 #FROM node:16.15-buster
-
-# If Alpine
-FROM node:16.15.0-alpine3.15
+FROM node:16.15.0-bullseye-slim
 
 # Install git
-# If Debian
-#RUN apt update
-#RUN apt install git
-
-# If Alpine
-RUN apk --no-cache add git
+RUN apt-get update
+RUN apt-get -y install git
 
 # Set a work dir (working directory)
 WORKDIR /app
