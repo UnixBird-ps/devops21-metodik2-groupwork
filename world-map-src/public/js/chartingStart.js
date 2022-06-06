@@ -315,7 +315,7 @@
       };
     this.getHcJsonString = function () {
       var d = JSON.stringify(z.options);
-      return d = d.replace(/"/g, "'")
+      return d = d.split('"').join("'");
     };
     this.getapiReport = function () {
       return this.xa
@@ -821,7 +821,7 @@
           c && (R = ".min.js");
           if (!H) throw "Cannot find JSCharting script tag in DOM.";
           window.JSCL.ye = H = H || "";
-          window.location.origin || (window.location.origin = window.location.protocol + "//" + window.location.hostname +
+          window.location.origin || (window.location.origin = window.location.protocol + `//` + window.location.hostname +
             (window.location.port ? ":" + window.location.port : ""));
           (b = window.location.origin.match(/\/\/([a-zA-Z0-9\.]+)\/?/)) && b.length && (b = b[1] || b[0]);
           b && G && b.toUpperCase() !== G.toUpperCase() && (window.JSCL.jj = !0)
@@ -5888,23 +5888,23 @@ Object.create || (Object.create = function () {
           d = d.replace(/&quot;/g, "'");
           d = d.replace(/<undefined><\/undefined>/g,
             "");
-          d = d.replace(/(fill|stroke)="rgba\(([ 0-9]+,[ 0-9]+,[ 0-9]+),([ 0-9\.]+)\)"/g, '$1="rgb($2)" $1-opacity="$3"');
+          d = d.replace(/(fill|stroke)="rgba\(([ 0-9]+,[ 0-9]+,[ 0-9]+),([ 0-9\.]+)\)".*/g, '$1="rgb($2)" $1-opacity="$3"');
           d = d.replace(/&nbsp;/g, "\u00a0").replace(/&shy;/g, "\u00ad");
-          d = d.replace(/isShadow="[^"]+"/g, "").replace(/symbolName="[^"]+"/g, "").replace(/jQuery[0-9]+="[^"]+"/g, "").replace(/isTracker="[^"]+"/g, "").replace(/onclick="[^"]+"/g, "").replace(/ transform /g, " ").replace(/:(path|rect)/g, "$1").replace(/style="([^"]+)"/g, function (d) {
+          d = d.replace(/isShadow="[^"]+".*/g, "").replace(/symbolName="[^"]+".*/g, "").replace(/jQuery[0-9]+="[^"]+".*/g, "").replace(/isTracker="[^"]+".*/g, "").replace(/onclick="[^"]+".*/g, "").replace(/ transform /g, " ").replace(/:(path|rect)/g, "$1").replace(/style="([^"]+)".*/g, function (d) {
             return d.toLowerCase()
           });
           d = d.replace(/(url\(#jscharting-[0-9]+)&quot;/g,
             "$1");
-          2 == d.match(/ xmlns="/g).length && (d = d.replace(/xmlns="[^"]+"/, ""));
+          2 == d.match(/ xmlns=".*/g).length && (d = d.replace(/xmlns="[^"]+/, ""));
           b = -1; - 1 != navigator.appVersion.indexOf("MSIE") && (b = parseFloat(navigator.appVersion.split("MSIE")[1]));
           8 <= b && 9 > b ? d = d.replace(/href=/g, ' xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href=') : 9 <= b && (d = d.replace(/href=/g, ' xlink:type="simple" xlink:href='));
-          6 <= b && (d = d.replace(/<IMG/g, " <image"), d = d.replace(/\.jpg">/gi, '.jpg"/>'), d = d.replace(/\.png">/gi, '.png"/>'), d = d.replace(/ hc-svg- /g, " "), d = d.replace(/ xlink: /g,
+          6 <= b && (d = d.replace(/<IMG/g, " <image"), d = d.replace(/\.jpg">/gi, `.jpg"` + `/>`), d = d.replace(/\.png">/gi, '.png"' + `/>`), d = d.replace(/ hc-svg- /g, " "), d = d.replace(/ xlink: /g,
             " "));
-          /Firefox/.test(navigator.userAgent) && (d = d.replace(/preserveAspectRatio="none">/g, 'preserveAspectRatio="none"/>'));
-          6 <= b && (d = d.replace(/(width=)/g, '$1"'), d = d.replace(/(width="\d{2,3})/g, '$1"'), d = d.replace(/width=""/g, 'width="'), d = d.replace(/(height=)/g, '$1"'), d = d.replace(/(height="\d{2,3})/g, '$1"'), d = d.replace(/height=""/g, 'height="'));
+          /Firefox/.test(navigator.userAgent) && (d = d.replace(/preserveAspectRatio="none">/g, 'preserveAspectRatio="none"' + `/>`));
+          6 <= b && (d = d.replace(/(width=)/g, '$1"'), d = d.replace(/(width="\d{2,3})/g, '$1"'), d = d.replace(/width="".*/g, 'width="'), d = d.replace(/(height=)/g, '$1"'), d = d.replace(/(height="\d{2,3})/g, '$1"'), d = d.replace(/height="".*/g, 'height="'));
           d = d.replace(/translate\(([0-9]+) ([0-9]+)\)/g, "translate($1,$2)");
           d = d.replace(/TITLE/g, "title");
-          return d = d.replace(/"M 0 0"/g, '"M 0 0 L 1 1"')
+          return d = d.replace(/"M 0 0".*/g, '"M 0 0 L 1 1"')
         },
         colorToPalette: c,
         rf: c
@@ -7134,7 +7134,7 @@ Object.create || (Object.create = function () {
               return Date.parse(a)
             }) : d;
             if (/[\+-\/\*\^%]+/.test(c)) try {
-              d = h = eval('"strict mode";(f{r/**/;f days{rn/86400000;}f weeks{rn/604800000;}f years{rn/31536000000;}f hours{rn/3600000;}f minutes{rn/60000;}f seconds{rn/(1000);}}())'.replace(/f/g, "function").replace(/\{r/g, "(n){return ").replace("/**/", c))
+              d = h = eval('"strict mode";(f{r/**/;f days{rn/86400000;}f weeks{rn/604800000;}f years{rn/31536000000;}f hours{rn/3600000;}f minutes{rn/60000;}f seconds{rn/(1000);}}())'.replace(/f/g, "function").replace(/\{r/g, "(n){return ").replace(`/**/`, c))
             } catch (f) { }
             r ? "date" === r ? d = $.isNumeric(d) ?
               new Date(parseFloat(d)) : new Date(Date.parse(d)) : "number" === r && (d.valueOf && (d = d.valueOf()), d = parseFloat(d)) : "string" === typeof d && ($.isNumeric(d) ? d = parseFloat(d) : /(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})(.\d+)[+-](\d{2})\:(\d{2})/.test(d) && (d = new Date(Date.parse(d))));
@@ -7259,7 +7259,7 @@ Object.create || (Object.create = function () {
         },
         Mh: function (a) {
           a = a.replace(/<br>/g, "\n").replace(/<br\/>/g, "\n").replace(/<br \/>/g, "\n");
-          a = a.replace(/"/g, "'");
+          a = a.replace(/".*/g, "'");
           return a = a.replace(/(<([^>]+)>)/ig, "")
         }
       }
@@ -8038,7 +8038,7 @@ Object.create || (Object.create = function () {
       if ("number" !== typeof a) {
         var r = "percentOfYAxisRange";
         e.g.o("heatmap") && (r = "percentOfZAxisRange");
-        f = f.pointValue || (1 < (b.points || b.data).length ? "chart" === c ? "{%percentOfDataRange/100}" : "{%percentOfSeriesRange/100}" : "{" + r + "/100}"); - 1 === f.indexOf(":") && (f = f.replace("}", ":n5}"));
+        f = f.pointValue || (1 < (b.points || b.data).length ? "chart" === c ? "{%percentOfDataRange/100}" : "{%percentOfSeriesRange/100}" : "{" + r + `/100}`); - 1 === f.indexOf(":") && (f = f.replace("}", ":n5}"));
         a = e.La(f, b, a, {
           culture: "en-US"
         });
@@ -10363,7 +10363,7 @@ Object.create || (Object.create = function () {
         (m = l.a(f, "style.fontSize")) && m.toFixed && (f.style.fontSize = m + "px");
         l.f(f, a, "rotation", "rotation");
         "titleBox" === g && a.url && 0 < a.url.length &&
-          (f.text = a.urlTarget && 0 < a.urlTarget.length ? '<a href="' + a.url.replace(/"/g, "'") + '" target="' + a.urlTarget + '">' + f.text + "</a>" : '<a href="' + a.url.replace(/"/g, "'") + '">' + f.text + "</a>");
+          (f.text = a.urlTarget && 0 < a.urlTarget.length ? '<a href="' + a.url.replace(/".*/g, "'") + '" target="' + a.urlTarget + '">' + f.text + "</a>" : '<a href="' + a.url.replace(/".*/g, "'") + '">' + f.text + "</a>");
         a.absolutePosition && "dataLabels" !== g ? (e = a.absolutePosition.split(","), 2 === e.length && (f.floating = !0, f.align = "left", f.verticalAlign = "top")) : "undefined" !== typeof a.offset && a.offset.charAt && (e = a.offset.split(","));
         e && (2 === e.length ? f = l.T(f, {
           x: parseInt(e[0]),
@@ -11309,7 +11309,7 @@ Object.create || (Object.create = function () {
     },
     Je: function (a) {
       var g = {};
-      a.text && 0 < a.text.length ? (g.text = a.text, a.url && 0 < a.url.length && (g.text = a.urlTarget && 0 < a.urlTarget.length ? '<a href="' + a.url.replace(/"/g, "'") + '" target="' + a.urlTarget + '">' + g.text + "</a>" : '<a href="' + a.url.replace(/"/g, "'") + '">' + g.text + "</a>"), a.align && (g.align = JSCL.v.Gd(["left", "center", "right"], ["low", "middle", "high"], a.align)), m.f(g, a, "rotation", "rotation"),
+      a.text && 0 < a.text.length ? (g.text = a.text, a.url && 0 < a.url.length && (g.text = a.urlTarget && 0 < a.urlTarget.length ? '<a href="' + a.url.replace(/".*/g, "'") + '" target="' + a.urlTarget + '">' + g.text + "</a>" : '<a href="' + a.url.replace(/".*/g, "'") + '">' + g.text + "</a>"), a.align && (g.align = JSCL.v.Gd(["left", "center", "right"], ["low", "middle", "high"], a.align)), m.f(g, a, "rotation", "rotation"),
         m.f(g, a, "margin", "margin"), m.f(g, a, "style", "style", JSCL.ya.gb), m.f(g, a, "style.color", "color"), a.cssClass && (g.style || (g.style = {}), g.style = m.T(g.style, JSCL.Hb.zb(a.cssClass))), g.enabled = !0) : g.enabled = !1;
       return g
     },
@@ -11329,7 +11329,7 @@ Object.create || (Object.create = function () {
         else if (-1 < e.toString().slice(e.length - 3).indexOf("on")) c && (h = !1);
         else if (n.Xc) {
           for (var e = n.Xc.toUpperCase().split(","), d = 0, k = e.length; d < k; d++)
-            if ((-1 !== ea.indexOf("//" + e[d]) || -1 !== ea.indexOf("//WWW." + e[d])) && c) {
+            if ((-1 !== ea.indexOf(`//` + e[d]) || -1 !== ea.indexOf(`//WWW.` + e[d])) && c) {
               h = !1;
               break
             } delete n.Xc
@@ -11962,7 +11962,7 @@ Object.create || (Object.create = function () {
           u && (l = " " + u.join(","));
           k = d.a(f, "label.url") || d.a(f, "url");
           f = d.a(f, "label.urlTarget") || d.a(f, "urlTarget");
-          k && 0 < k.length ? g.html = f && 0 < f.length ? '<a href="' + k.replace(/"/g, "'") + '" target="' + f + '" ' + l + ">" + g.html + "</a>" : '<a href="' + k.replace(/"/g, "'") + '"' + l + ">" + g.html + "</a>" : u && (g.html = "<span " + l + ">" + g.html + "</span>");
+          k && 0 < k.length ? g.html = f && 0 < f.length ? '<a href="' + k.replace(/".*/g, "'") + '" target="' + f + '" ' + l + ">" + g.html + "</a>" : '<a href="' + k.replace(/".*/g, "'") + '"' + l + ">" + g.html + "</a>" : u && (g.html = "<span " + l + ">" + g.html + "</span>");
           c.items.push(g)
         }
         return c
@@ -12026,7 +12026,7 @@ Object.create || (Object.create = function () {
           e, f;
         if (n.V && (e = n.V = JSCL.v.Ni(n.V), 11 === e.length && (n.V = e = ""), e && (n.V = e, e = n.V.split(";"), 1 < e.length))) {
           n.Xc = e[0];
-          var h = e[1].split("/");
+          var h = e[1].split(`/`);
           n.Wc = h[2] + ("0" + h[0]).slice(-2) + ("0" + h[1]).slice(-2);
           e[2] === (81323539073415).toString(36) && (n.hf = !0);
           n.V =
@@ -12457,7 +12457,7 @@ Object.create || (Object.create = function () {
             (z ? (u && (l = u), g = JSCL.v.format(e, new Date(g), l)) : u && (g = JSCL.v.format(e, g, u, p)));
           jQuery.isFunction(m) && (m = m(b.value));
           void 0 !== m && m.charAt ? (m = m.replace(/%value/gi, g).replace(/%name/gi, g), m = e.Kb(m)) : m = g;
-          q && 0 < q.length && (q = JSCL.v.Ec(q, {}, f, h, k), m = r && 0 < r.length ? '<a href="' + q.replace(/%value/gi, m).replace(/"/g, "'") + '" target="' + r + '">' + m + "</a>" : '<a href="' + q.replace(/%value/gi, m).replace(/"/g, "'") + '">' + m + "</a>");
+          q && 0 < q.length && (q = JSCL.v.Ec(q, {}, f, h, k), m = r && 0 < r.length ? '<a href="' + q.replace(/%value/gi, m).replace(/".*/g, "'") + '" target="' + r + '">' + m + "</a>" : '<a href="' + q.replace(/%value/gi, m).replace(/".*/g, "'") + '">' + m + "</a>");
           return m
         };
         f() ? ((g = d.a(E, "chart.spacingBottom")) ? 20 > g && (g = 24) : g = 24, d.c(E, "chart.spacingBottom",
@@ -12639,7 +12639,7 @@ Object.create || (Object.create = function () {
         k = JSCL.j.Va(this, "point.options.label.url", "point.series.options.defaultPoint.label.url", "series.chart.options.chart.defaultPoint.label.url");
         n.g.L("behavior", "tree") && d.parentSeries && d.parentSeries != c.id && (c = n.B(d.parentSeries), b.isLeaf || (g = !0));
         jQuery.isFunction(e) ? d.id && (b = n.get(d.id), u = e(b)) : e && (u = g ? n.Ba(e, c, f, l) : n.La(e, c, d, f, l));
-        return e ? (h && 0 < h.length && (h = g ? n.Ba(h, c, f, l) : n.La(h, c, d, f, l), u = k && 0 < k.length ? '<a href="' + h.replace(/"/g, "'") + '" target="' + k + '">' + u + "</a>" : '<a href="' + h.replace(/"/g, "'") +
+        return e ? (h && 0 < h.length && (h = g ? n.Ba(h, c, f, l) : n.La(h, c, d, f, l), u = k && 0 < k.length ? '<a href="' + h.replace(/".*/g, "'") + '" target="' + k + '">' + u + "</a>" : '<a href="' + h.replace(/".*/g, "'") +
           '">' + u + "</a>"), u) : ""
       };
       n.g.Ug(n);
@@ -13576,11 +13576,11 @@ Object.create || (Object.create = function () {
       }
 
       function U(a) {
-        a = a.replace(/\\/g, "/").split("/");
+        a = a.replace(/\\/g, `/`).split(`/`);
         a = a[a.length - 1].split(".");
         1 < a.length && a.pop();
         a = a.join("."); - 1 < a.indexOf(".") && (a = a.split(".")[0]);
-        a = a.replace(/\\/g, "/").replace(/\//g, "_").replace(/\./g,
+        a = a.replace(/\\/g, `/`).replace(/\//g, "_").replace(/\./g,
           "_");
         return a.toLowerCase()
       }
@@ -14502,7 +14502,7 @@ Object.create || (Object.create = function () {
     calendars: {
       standard: {
         name: "Gregorian_USEnglish",
-        "/": "/",
+        "\/": `/`,
         ":": ":",
         firstDay: 0,
         days: {
@@ -14744,8 +14744,8 @@ Object.create || (Object.create = function () {
         case "gg":
           g.eras && b.push(g.eras[z(a, m)].name);
           break;
-        case "/":
-          b.push(g["/"]);
+        case `/`:
+          b.push(g[`/`]);
           break;
         default:
           throw "Invalid date format pattern '" + l + "'.";
@@ -14941,7 +14941,7 @@ Object.create || (Object.create = function () {
             case "z":
               n = "([+-]?\\d\\d?)";
               break;
-            case "/":
+            case `/`:
               n = "(\\/)";
               break;
             default:

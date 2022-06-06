@@ -15,7 +15,10 @@ export default function App() {
   const [co, setCo] = useState(0);
   useEffect(() => {
     // We need to update once to get map to work, strange...
-    co === 0 && setTimeout(() => setCo(co + 1), 100);
+    co === 0 && setTimeout(() => {
+      setCo(co + 1)
+      document.body.style.visibility = 'visible';
+    }, 500);
   }, [co]);
 
   return <>

@@ -5,6 +5,7 @@ body {
   background-size: cover;
   background-attachment: fixed;
   font-family: 'Fira Sans';
+  visibility: hidden;
 }
 
 .map {
