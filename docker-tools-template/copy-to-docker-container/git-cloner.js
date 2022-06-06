@@ -40,7 +40,6 @@ function readAndParseDockerSettings() {
     .map(x => typeof x === 'string' ? { branch: x, routes: [] } : x)
     .filter((x, i, a) => x instanceof Array ?
       (a[i - 1].routes = x) && false : true);
-
   let port = 3000;
   for (let x of ds) {
     let hostPort = x.routes.find(x => typeof x === 'number');
@@ -185,8 +184,9 @@ function buildComposeFile() {
         `    container_name: ${name}`,
         `    build: /storage/branches/${branch}`,
         `    working_dir: ${workingDir}`,
+        `    network_mode: host`,
         `    ports:`,
-        `      - "${hostPort}:${port}"`,
+        `      - "127.0.0.1:${hostPort}:${port}"`,
         `    volumes:`,
         `      - ${gitRepoName}-storage:/storage`,
         `    environment:`,
