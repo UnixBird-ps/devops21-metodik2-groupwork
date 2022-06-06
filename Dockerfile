@@ -10,16 +10,10 @@ WORKDIR /app/
 
 RUN [ "npm", "install" ]
 
-RUN pwd \
-&& ls -alF
-
 COPY ./world-map-src/ /app/
 
-CMD pwd \
-&& ls -alF \
-&& cd /app \
-&& pwd \
-&& ls -alF \
+CMD cd /app \
+&& npm run build \
 && npm run dev
 
 #CMD [ "node", "/app/backend-dummy/" ]
