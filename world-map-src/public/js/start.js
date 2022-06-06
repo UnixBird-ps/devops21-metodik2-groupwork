@@ -4,8 +4,8 @@ window.start = async function (cb) {
 
   let old = $.getScript;
   $.getScript = (...args) => {
-    args[0].includes('world') && (args[0] = '/js/world.js');
-    args[0].includes('Core') && (args[0] = '/js/chartingCore.js');
+    args[0].includes('world') && (args[0] = 'js/world.js');
+    args[0].includes('Core') && (args[0] = 'js/chartingCore.js');
     return old.apply($, args);
   }
 
