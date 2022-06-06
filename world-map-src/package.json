@@ -4,12 +4,12 @@
    "version": "0.0.0",
    "scripts": {
       "start": "node backend/index.js",
-      "dev": "vite",
+      "dev": "vite --host",
       "build": "vite build",
       "preview": "vite preview"
    },
    "dependencies": {
-      "express": "^4.17.2",
+      "express": "^4.18.1",
       "react": "^18.0.0",
       "react-dom": "^18.0.0"
    },
