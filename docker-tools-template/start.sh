@@ -60,20 +60,6 @@ docker run \
 -e GIT_BRANCH_NAME=$BRANCH_NAME \
 $REPO_NAME-git-cloner
 
-### start the syncer container
-### build image from Dockerfile
-docker build -f syncer.Dockerfile -t $REPO_NAME-syncer .
-
-### run the syncer image as container
-echo ""
-echo "Starting syncer!"
-docker run -d \
---name $REPO_NAME-syncer \
---mount type=bind,source="$DIRNAME/copy-to-docker-container",target=/app \
---mount type=bind,source="$REPO_DIR",target=/repo-bind-mount \
--v $REPO_NAME-storage:/storage \
-$REPO_NAME-syncer
-
 if [ $? -ne 0 ]; then
   # There was an error with git cloner
   # Probably no SSH key - the JS script will
@@ -84,15 +70,28 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-### remove container
+### remove cloner container
 echo "REMOVING THE CONTAINER $REPO_NAME-git-cloner";
 docker container rm -f $REPO_NAME-git-cloner
 
-### remove image
+### remove cloner image
 echo ""
 echo "REMOVING THE IMAGE $REPO_NAME-git-cloner";
 docker image rm -f $REPO_NAME-git-cloner
 echo ""
+
+### build syncer image from Dockerfile
+docker build -f syncer.Dockerfile -t $REPO_NAME-syncer .
+
+### run syncer container
+echo ""
+echo "Starting syncer!"
+docker run -d \
+--name $REPO_NAME-syncer \
+--mount type=bind,source="$DIRNAME/copy-to-docker-container",target=/app \
+--mount type=bind,source="$REPO_DIR",target=/repo-bind-mount \
+-v $REPO_NAME-storage:/storage \
+$REPO_NAME-syncer
 
 ### create a container based on the official docker image
 ### that runs docker (mounted as a socket)
