@@ -7,8 +7,8 @@ function dbConnectWithRetry() {
   return new Promise(res => {
     let connect = () => {
       mongoose.connect(connection, err => {
-        console.log('Connection error to db, retrying in 1 second');
-        err ? setTimeout(connect, 1000) : res();
+        console.log('Connection error to db, retrying in 0.2 second');
+        err ? setTimeout(connect, 200) : res();
       });
     };
     connect();
