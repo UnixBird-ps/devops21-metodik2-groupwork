@@ -2,9 +2,9 @@ const express = require('express');
 const path = require('path');
 const dbConnect = require('./dbConnect');
 
-// Start on 4105 if proxified by vite, otherwise environment variable PORT
+// Start on 4015 if proxified by vite, otherwise environment variable PORT
 let port = process.argv[2] === '--dev' ? 4015 : process.env.PORT;
-port = port || 4025;// fallback to 4000 if no environment variable
+port = port || 4015;// fallback to 4015 if no environment variable
 
 async function start() {
 
