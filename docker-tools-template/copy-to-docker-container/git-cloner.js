@@ -82,7 +82,7 @@ function clone() {
         'pwd',
         'echo There should be a folder named ssh-key in following listing:',
         'ls -alF',
-        'echo Changing current directory to /app',
+        'echo Changing current directory to /app/ssh-key',
         'cd ssh-key',
         'echo Generating new SSH key.',
         `ssh-keygen -t ed25519 -N "" -C "${gitEmail}" -f id_ed25519`,
