@@ -18,5 +18,13 @@
   "dev-country-info-db-work-ps",
   [
     4004
+  ],
+  "dev-capitals-backend-dummy-work-ps",
+  [
+    4005
+  ],
+  "dev-capitals-db-work-ps",
+  [
+    4006
   ]
 ]
