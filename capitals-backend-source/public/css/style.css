@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+body {
+  margin: 20px;
+  font-family: 'Fira Sans';
+  background: black;
+  color: white;
+}
+
+p {
+  font-size: 80%;
+}
+
+body a {
+  color: rgb(158, 184, 203);
+}
