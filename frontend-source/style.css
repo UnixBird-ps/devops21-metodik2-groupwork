@@ -1,5 +1,6 @@
 iframe {
-  border: 0
+  border: 0;
+  margin: 0;
 }
 
 body {
@@ -8,11 +9,27 @@ body {
 }
 
 iframe[name="worldMap"] {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100vw;
-  height: 50vh;
+  height: calc(50vh - 3px);
+  border-bottom: 3px solid rgb(132, 132, 186);
 }
 
 iframe[name="countryInfo"]{
-  width: 50vw;
+  position: absolute;
+  top: 50vh;
+  left: 0;
+  width: calc(60vw - 3px);
+  height: 50vh;
+  border-right: 3px solid rgb(132, 132, 186);
+}
+
+iframe[name="capitalInfo"] {
+  position: absolute;
+  top: 50vh;
+  left: 60vw;
+  width: 40vw;
   height: 50vh;
 }
