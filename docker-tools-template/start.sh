@@ -3,18 +3,23 @@
 
 # Get the dir path of the dir where this script is located
 DIRNAME=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+echo "DIRNAME: $DIRNAME"
 
 # Get the repo dir path
 REPO_DIR="$(dirname "$DIRNAME")"
+echo "REPO_DIR: $REPO_DIR"
 
 # Cd to the dir where this script is located
 cd $DIRNAME
+echo "Current dir: $( pwd )"
 
 ### get the name of the repository
 REPO_NAME=$(basename -s .git `git config --get remote.origin.url`)
+echo "REPO_NAME: $REPO_NAME"
 
 ## get the name of the checked out branch
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+echo "BRANCH_NAME: $BRANCH_NAME"
 
 ## dockerSettings.json file path
 DOCKER_SETTINGS_FILE="$REPO_DIR/dockerSettings.json"
@@ -33,7 +38,7 @@ if [ ! -f "$DOCKER_SETTINGS_FILE" ]; then
 fi
 
 ## copy dockerSettings.json into the copy-to-docker-folder
-rm copy-to-docker-container/dockerSettings.json
+rm copy-to-docker-container/dockerSettings.json 2> /dev/null
 cp $DOCKER_SETTINGS_FILE copy-to-docker-container/dockerSettings.json
 
 echo ""
