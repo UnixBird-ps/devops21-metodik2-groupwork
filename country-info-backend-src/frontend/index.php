@@ -17,19 +17,16 @@
    // $conn = new mysqli($servername, $username, $password);
    $conn = new mysqli();
 
+   printf ( "Check connection.\n" );
+
    // Check connection
    if ( $conn->connect_error )
    {
       die( "Connection failed: " . $conn->connect_error );
    }
-
-   /* check if server is alive */
-   if ( $conn->ping() )
-   {
-      printf ( "Our connection is ok!\n" );
-   }
    else
    {
+      printf ( "Our connection is ok!\n" );
       printf ( "Error: %s\n", $conn->error );
    }
 
