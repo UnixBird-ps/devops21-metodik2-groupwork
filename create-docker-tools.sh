@@ -3,7 +3,9 @@
 chmod 700 ./docker-tools-template/start.sh
 chmod 700 ./docker-tools-template/stop.sh
 
-cp -r --preserve=mode,timestamps docker-tools-template docker-tools 2> /dev/null
+cp -r docker-tools/copy-to-docker-container/ssh-key ssh-key 2> /dev/null
+rm -r docker-tools 2> /dev/null
+cp -r docker-tools-template docker-tools 2> /dev/null
 cp -r ssh-key docker-tools/copy-to-docker-container/ 2> /dev/null
 
 echo "./docker-tools/start.sh" > start

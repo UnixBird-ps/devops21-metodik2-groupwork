@@ -9,32 +9,45 @@
 </head>
 <body>
 <?php
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+   ini_set('display_errors', 1);
+   ini_set('display_startup_errors', 1);
+   error_reporting(E_ALL);
 
-    // Create connection
-    // $conn = new mysqli($servername, $username, $password);
-    $conn = new mysqli();
+   // Create connection
+   // $conn = new mysqli($servername, $username, $password);
+   $conn = new mysqli();
 
-    // Check connection
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
+   // Check connection
+   if ( $conn->connect_error )
+   {
+      die( "Connection failed: " . $conn->connect_error );
+   }
 
-    // Not really using db after this
+   /* check if server is alive */
+   if ( $conn->ping() )
+   {
+      printf ( "Our connection is ok!\n" );
+   }
+   else
+   {
+      printf ( "Error: %s\n", $conn->error );
+   }
 
-    $country = isset($_GET["country"]) ? $_GET["country"] : '';
+   // Not really using db after this
 
-    if(!file_exists("./info/".$country.".html")){
+   $country = isset( $_GET[ "country" ] ) ? $_GET[ "country" ] : '';
+
+   if ( !file_exists( "./info/".$country.".html" ) )
+   {
       echo "<h1>Click a country...</h1>";
-    }
-    else {
-      $contents = file_get_contents("./info/".$country.".html");
-      $pos = strpos($contents,'coordinates');
+   }
+   else
+   {
+      $contents = file_get_contents( "./info/".$country.".html" );
+      $pos = strpos( $contents,'coordinates' );
       echo "<h1>$country</h1";
       echo $contents;
-    }
+   }
 ?>
 </body>
 </html>
