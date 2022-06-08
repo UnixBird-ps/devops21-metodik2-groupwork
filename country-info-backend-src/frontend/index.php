@@ -26,7 +26,7 @@
    }
    else
    {
-      printf ( "Our connection is ok!\n" );
+      printf ( "Our db connection is ok!\n" );
       printf ( "Error: %s\n", $conn->error );
    }
 
