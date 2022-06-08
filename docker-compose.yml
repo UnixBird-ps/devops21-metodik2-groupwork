@@ -1,59 +1,48 @@
 
-# iframer/docker-compose.yml
+# dev-iframer/docker-compose.yml
 services:
-  devops2-iframer:
-    container_name: devops2-iframer
-    hostname: devops2-iframer
-    image: devops2-iframer:latest
-    ports:
-      - "127.0.0.1:3201:80/tcp"
-    #networks:
-    #  - devops2-proxied-net
-
-
-
-  # world-map-backend/docker-compose.yml
-  devops2-world-map-backend:
-    container_name: devops2-world-map-backend
-    hostname: devops2-world-map-backend
-    image: devops2-world-map-backend:latest
+  devops2-dev-iframer:
+    container_name: devops2-dev-iframer
+    hostname: devops2-dev-iframer
+    image: devops2-dev-iframer:latest
     depends_on:
-      - devops2-iframer
+      - devops2-dev-world-map-backend
+      - devops2-dev-country-info-backend
+      - devops2-dev-capitals-backend
     environment:
-      PORT: 3202
+      - PORT=4001
     ports:
-      - "127.0.0.1:3202:3202/tcp"
+      - "127.0.0.1:4001:4001/tcp"
     #networks:
     #  - devops2-proxied-net
 
 
 
-  # capitals-backend/docker-compose.yml
-  devops2-capitals-backend:
-    container_name: devops2-capitals-backend
-    hostname: devops2-capitals-backend
-    image: devops2-capitals-backend:latest
-    depends_on:
-      - devops2-iframer
-      - devops2-capitals-db
+  # dev-world-map-backend/docker-compose.yml
+  devops2-dev-world-map-backend:
+    container_name: devops2-dev-world-map-backend
+    hostname: devops2-dev-world-map-backend
+    image: devops2-dev-world-map-backend:latest
+    environment:
+      - PORT=4002
     ports:
-      - "3205:80/tcp"
+      - "127.0.0.1:4002:4002/tcp"
     #networks:
     #  - devops2-proxied-net
-    #  - devops2-db-net
 
 
 
-  # country-info-backend/docker-compose.yml
-  devops2-country-info-backend:
-    container_name: devops2-country-info-backend
-    hostname: devops2-country-info-backend
-    image: devops2-country-info-backend:latest
+  # dev-country-info-backend/docker-compose.yml
+  devops2-dev-country-info-backend:
+    container_name: devops2-dev-country-info-backend
+    hostname: devops2-dev-country-info-backend
+    image: devops2-dev-country-info-backend:latest
     depends_on:
-      - devops2-iframer
-      - devops2-country-info-db
+      - devops2-dev-country-info-db
+    environment:
+      - PORT=4003
     ports:
-      - "127.0.0.1:3203:80/tcp"
+      - "127.0.0.1:4003:4003/tcp"
     volumes:
       - ./secrets:/etc/apache2/secrets
     #networks:
@@ -62,34 +51,54 @@ services:
 
 
 
-  # capitals-db/docker-compose.yml
-  devops2-capitals-db:
-    container_name: devops2-capitals-db
-    hostname: devops2-capitals-db
-    image: devops2-capitals-db:latest
+  # dev-country-dev-info-db/docker-compose.yml
+  devops2-dev-country-info-db:
+    container_name: devops2-dev-country-info-db
+    hostname: devops2-dev-country-info-db
+    image: devops2-dev-country-info-db:latest
     ports:
-      - "27017:27017/tcp"
+      - "127.0.0.1:4004:4004/tcp"
+    environment:
+      - PORT=4004
+      - MYSQL_ROOT_HOST=localhost
+      - MYSQL_USER=countries-user
+      - MYSQL_DATABASE=countries
+      - MYSQL_PASSWORD_FILE=/run/secrets/countries-user
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./secrets:/run/secrets
     #networks:
     #  - devops2-db-net
 
 
 
-  # country-info-db/docker-compose.yml
-  devops2-country-info-db:
-    container_name: devops2-country-info-db
-    hostname: devops2-country-info-db
-    image: devops2-country-info-db:latest
-    volumes:
-      - ./db:/var/lib/mysql
-      - ./secrets:/run/secrets
-    ports:
-      - "127.0.0.1:3306:3306/tcp"
+  # dev-capitals-backend/docker-compose.yml
+  devops2-dev-capitals-backend:
+    container_name: devops2-dev-capitals-backend
+    hostname: devops2-dev-capitals-backend
+    image: devops2-dev-capitals-backend:latest
+    depends_on:
+      - devops2-dev-capitals-db
     environment:
-      MYSQL_ROOT_HOST: localhost
-      MYSQL_USER: countries-user
-      MYSQL_DATABASE: countries
-      MYSQL_PASSWORD_FILE: /run/secrets/countries-user
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root
+      - PORT=4005
+    ports:
+      - "127.0.0.1:4005:4005/tcp"
+    #networks:
+    #  - devops2-proxied-net
+    #  - devops2-db-net
+
+
+
+  # dev-capitals-db/docker-compose.yml
+  devops2-dev-capitals-db:
+    container_name: devops2-dev-capitals-db
+    hostname: devops2-dev-capitals-db
+    image: devops2-dev-capitals-db:latest
+    environment:
+      - PORT=4006
+    ports:
+      - "127.0.0.1:4006:4006/tcp"
     #networks:
     #  - devops2-db-net
 
