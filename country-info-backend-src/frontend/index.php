@@ -17,7 +17,7 @@
    // $conn = new mysqli($servername, $username, $password);
    $conn = new mysqli();
 
-   printf ( "Check connection.\n" );
+   printf ( "Checking connection...\n" );
 
    // Check connection
    if ( $conn->connect_error )
@@ -27,7 +27,6 @@
    else
    {
       printf ( "Our db connection is ok!\n" );
-      printf ( "Error: %s\n", $conn->error );
    }
 
    // Not really using db after this
