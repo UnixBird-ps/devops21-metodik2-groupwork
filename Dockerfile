@@ -1,4 +1,8 @@
+FROM mongo:5.0
 
-FROM mongo:5.0.9-focal
-
-CMD mongod --port $PORT
+### With mongod (the mongo daemon used to start mongoDB
+### you can specify port, but must also specify a bind_ip
+### (the external ip of the server) OR bind all ip numbers.
+### Since we don't know what ip number Docker assigns the
+### container in Docker's internal network we use -bind_ip_all
+CMD mongod --port=$PORT --bind_ip_all
