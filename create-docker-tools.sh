@@ -9,7 +9,7 @@ cp -r ssh-key docker-tools/copy-to-docker-container/
 rm -r ssh-key
 echo "./docker-tools/start.sh" > start
 echo "./docker-tools/stop.sh" > stop
-chmod 770 start
+chmod 770 startch
 chmod 770 stop
 
 echo ""
