@@ -3,8 +3,8 @@
 /start
 /stop
 
-/_ssh-key_
 /ssh-key
+/_ssh-key_
 
 # Remove annoying hidden Mac files
 .DS_Store
