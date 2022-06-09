@@ -16,8 +16,7 @@ const dockerSettings = readAndParseDockerSettings();
 
 function exec(...args) {
   // Silent execution
-  //execSync(...args, { stdio: 'pipe' });
-  return execSync( ...args );
+  execSync(...args, { stdio: 'pipe' });
 }
 
 function log(...args) {
@@ -65,56 +64,35 @@ function clone() {
   log('repository:', gitRepoSsh);
   log('-');
 
-   log('');
-
   try {
 
     // if the ssh key does not exists then create it
     if (!fs.existsSync('./ssh-key/id_ed25519.pub')) {
-      log(exec([
-        'echo Current directory is:',
-        'pwd',
-        'echo There should be a folder named ssh-key in following listing:',
-        'ls -alF',
-        'echo Trying again.',
-        'cd /app',
-        'echo Current directory is:',
-        'pwd',
-        'echo There should be a folder named ssh-key in following listing:',
-        'ls -alF',
-        'echo Changing current directory to /app/ssh-key',
+      exec([
         'cd ssh-key',
-        'echo Generating new SSH key.',
         `ssh-keygen -t ed25519 -N "" -C "${gitEmail}" -f id_ed25519`,
         `chmod 777 *`
-      ].join(' && ')).toString());
+      ].join(' && '));
     }
-
-   log('');
 
     exec([
       // copy ssh-key to .ssh folder
-      'cp -r ssh-key ~/.ssh',
+      'cp -r ssh-key /root/.ssh',
       // set correct chmod for ssh-key files
-      'chmod -R 400 ~/.ssh',
+      'chmod -R 400 /root/.ssh',
       // start ssh agent
       'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_ed25519',
       // set git username and email
       `git config --global user.name "${gitUsername}"`,
       `git config --global user.email "${gitEmail}"`,
       // add github.com to known host (this avoids question before clone)
-      'ssh-keyscan github.com >> ~/.ssh/known_hosts',
+      'ssh-keyscan github.com >> /root/.ssh/known_hosts',
       // clone
       `cd /storage`,
       `git clone ${gitRepoSsh} cloned-repo`
     ].join(' && '));
   }
   catch (error) { verboseCloneError(error); }
-
-  log('');
-  log('-');
-  log('');
-  log('Starting checkout of all branches from dockerSettings.json file');
 
   // Cloned successfully
   checkoutAllBranches();
@@ -206,9 +184,8 @@ function buildComposeFile() {
         `    container_name: ${name}`,
         `    build: /storage/branches/${branch}`,
         `    working_dir: ${workingDir}`,
-        `    network_mode: host`,
         `    ports:`,
-        `      - "127.0.0.1:${hostPort}:${port}"`,
+        `      - "${hostPort}:${port}"`,
         `    volumes:`,
         `      - ${gitRepoName}-storage:/storage`,
         `    environment:`,
