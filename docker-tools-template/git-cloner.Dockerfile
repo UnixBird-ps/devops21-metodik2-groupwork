@@ -1,7 +1,6 @@
 
 # If Debian
 FROM node:16.15-bullseye
-#FROM node:16.15.0-bullseye-slim
 
 # Install git
 RUN apt-get update
