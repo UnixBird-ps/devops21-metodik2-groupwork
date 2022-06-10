@@ -5,9 +5,6 @@
 
 /ssh-key
 
-**/ssh-key
-**/sshkey
-
 # Remove annoying hidden Mac files
 .DS_Store
 __MACOSX
