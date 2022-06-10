@@ -3,10 +3,7 @@
 /start
 /stop
 
-ssh-key
-sshkey
-*ssh-key*
-*sshkey*
+/ssh-key
 
 **/ssh-key
 **/sshkey
