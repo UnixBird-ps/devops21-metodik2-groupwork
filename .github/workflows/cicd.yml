@@ -6,7 +6,17 @@ on:
   # Triggers the workflow on push or pull request events but only for the specified branches
   push:
   pull_request:
-    branches: [ template-dev, template-prod, dev-iframer, dev-world-map-backend, dev-country-info-backend, dev-capitals-backend, prod-iframer, prod-world-map-backend, prod-country-info-backend, prod-capitals-backend ]
+    branches:
+      - dev-iframer
+      - dev-world-map-backend
+      - dev-country-info-backend
+      - dev-country-info-db
+      - dev-capitals-backend
+      - dev-capitals-db
+      - prod-iframer
+      - prod-world-map-backend
+      - prod-country-info-backend
+      - prod-capitals-backend
 
 env:
   BRANCH: ${{ github.ref_name }}
@@ -31,9 +41,6 @@ jobs:
           elif [[ ${{ env.BRANCH }} == 'dev-world-map-backend' ]] || [[ env.BRANCH == 'prod-world-map-backend' ]]
           then
             echo "::set-output name=TEAM_DIR::world-map-backend"
-          elif [[ ${{ env.BRANCH }} == 'dev-world-map-db' ]] || [[ env.BRANCH == 'prod-world-map-db' ]]
-          then
-            echo "::set-output name=TEAM_DIR::world-map-db"
           elif [[ ${{ env.BRANCH }} == 'dev-country-info-backend' ]] || [[ env.BRANCH == 'prod-country-info-backend' ]]
           then
             echo "::set-output name=TEAM_DIR::country-info-backend"
@@ -81,9 +88,7 @@ jobs:
       github.ref == 'refs/heads/dev-iframer' ||
       github.ref == 'refs/heads/dev-world-map-backend' ||
       github.ref == 'refs/heads/dev-country-info-backend' ||
-      github.ref == 'refs/heads/dev-country-info-db' ||
-      github.ref == 'refs/heads/dev-capitals-backend' ||
-      github.ref == 'refs/heads/dev-capitals-db'
+      github.ref == 'refs/heads/dev-capitals-backend'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -101,7 +106,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           # Here we're setting the context for the build to the var we created in set-vars job
-          context: ${{ needs.set-vars.outputs.output1 }}
+          # context: ${{ needs.set-vars.outputs.output1 }}
+          context: .
           push: true
           # Set the repo, name and tag of the docker image that we're pushing to Docker Hub
           # tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops21-metodik2-${{ env.BRANCH }}:latest
