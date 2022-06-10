@@ -9,9 +9,9 @@
   "",
   "// example:",
   "",
-  "dev-proxy",
+  "dev-proxy-world-map-tariq",
   [
-    3000
+    4000
   ],
   "dev-frontend",
   [
