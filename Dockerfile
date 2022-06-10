@@ -12,6 +12,7 @@ ENV COUNTRY_INFO_PORT=4003
 # 4004 is reserved
 ENV CAPITALS_PORT=4005
 # 4006 is reserved
+ENV CAPITALS_DB_PORT=4006
 
 CMD \
 sed -i.bak "s/__NGINX_PORT__/$NGINX_PORT/" /etc/nginx/conf.d/default.conf \
@@ -19,4 +20,5 @@ sed -i.bak "s/__NGINX_PORT__/$NGINX_PORT/" /etc/nginx/conf.d/default.conf \
 && sed -i.bak "s/__WORLD_MAP_PORT__/$WORLD_MAP_PORT/" /etc/nginx/conf.d/default.conf \
 && sed -i.bak "s/__COUNTRY_INFO_PORT__/$COUNTRY_INFO_PORT/" /etc/nginx/conf.d/default.conf \
 && sed -i.bak "s/__CAPITALS_PORT__/$CAPITALS_PORT/" /etc/nginx/conf.d/default.conf \
+    && sed -i.bak "s/__CAPITALS_DB_PORT__/$CAPITALS__DB_PORT/" /etc/nginx/conf.d/default.conf \
 && nginx -g "daemon off;"
