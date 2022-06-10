@@ -40,3 +40,5 @@ echo ""
 echo "Containers, images and volume removed!"
 echo "(Kept the docker image to speed up next start...)"
 echo ""
+
+
