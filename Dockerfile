@@ -5,7 +5,7 @@ FROM node:16.15.0-alpine3.15
 
 RUN mkdir /app
 
-COPY package*.json backend public src index.html vite.config.js /app/
+COPY package*.json backend/ public/ src/ index.html vite.config.js /app/
 
 RUN cd /app && npm install && npm run dev
 
