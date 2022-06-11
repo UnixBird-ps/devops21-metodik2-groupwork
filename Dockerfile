@@ -1,15 +1,15 @@
 
 FROM node:16.15.0-alpine3.15
 
-WORKDIR /app/
+#WORKDIR /app/
 
-COPY ./package*.json /app/
+#COPY ./capitals-backend-source/package*.json /app/
 
-RUN cd /app \
-&& npm install
+#RUN cd /app \
+#&& npm install
 
-COPY ./capitals-backend-source/ /app/
+#COPY ./capitals-backend-source/ /app/
 
 CMD \
-cd /app \
+npm install \
 && npm run dev
