@@ -1,13 +1,13 @@
 [
-  "dev-proxy-work-ps",
+  "dev-proxy-work-tariq",
   [
     4000
   ],
-  "dev-iframer-work-ps",
+  "dev-iframer-tariq",
   [
     4001
   ],
-  "dev-world-map-backend-work-ps",
+  "dev-world-map-backend-tariq",
   [
     4002
   ],
@@ -19,11 +19,11 @@
   [
     4004
   ],
-  "dev-capitals-backend-work-ps",
+  "dev-capitals-backend-work-tariq",
   [
     4005
   ],
-  "dev-capitals-db-work-ps",
+  "dev-capitals-db-work-tariq",
   [
     4006
   ]
