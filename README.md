@@ -1,14 +1,9 @@
 # devops21-metodik2-groupwork
 
 A school assignment group work on CI/CD for course DevOps Metodik 2 using Docker.  
-
-
-
-
-
-
-
-
+  
+  
+  
 Hello developer!
 
 This is a message from your friendly DevOp!
@@ -23,12 +18,12 @@ For this purpose we have chosen Docker in conjunction with our own setup for aut
 We will start with 
 * different teams in the same main project having the code for their service in specific branches.
 * your team can create as many branches you want, but you start with branching out the main branch and call your base branch "main-service-name".
-* then you can create dev and feature branches according to the same naming convention (dev-service-name, feature-some-feature-service-name etc) from your specific main branch.
+* then you can create dev and feature branches according to the same naming convention (dev-service-name, dev-service-name-feature-some-feature etc) from your specific main branch.
 
-**Note:** Should we need to separate the code further we might move each service into separate repositories. But we will wait with doing that intill the project is big enough.
+**Note:** Should we need to separate the code further we might move each service into separate repositories. But we will wait with doing that until the project is big enough.
 
 ## How to get started!
-Checkout the docker branch and run the following command in your terminal:
+For completely new service, start by first creating your service branch based on the template-dev branch and run the following command in your terminal:
 
 ```
 ./create-docker-tools.sh
@@ -54,7 +49,7 @@ This will give you two shell scripts (that are git-ignored and thus available in
 Make sure there is: A file named **Dockerfile** which specifies at least:
 * a base image (FROM) 
 * and a command to run (CMD) when the server starts.
-* for good practis and specific tags that you can use please search on https://hub.docker.com/ 
+* for good practice and specific tags that you can use please search on https://hub.docker.com/ 
 
 Example:
 
