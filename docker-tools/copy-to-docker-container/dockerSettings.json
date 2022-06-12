@@ -1,5 +1,5 @@
 [
-  "dev-proxy-work-tariq",
+  "dev-proxy",
   [
     4000
   ],
@@ -7,7 +7,7 @@
   [
     4001
   ],
-  "dev-world-map-backend-tariq",
+  "dev-world-map-backend",
   [
     4002
   ],
@@ -15,7 +15,7 @@
   [
     4003
   ],
-  "dev-country-info-db",
+  "dev-country-info-db-work-ps",
   [
     4004
   ],
