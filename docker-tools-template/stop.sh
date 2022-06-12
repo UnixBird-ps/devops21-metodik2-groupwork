@@ -30,11 +30,11 @@ echo ""
 echo "Removing volume..."
 docker volume rm -f $REPO_NAME-storage
 
-### clean up git-ignored things ofen installed
+### clean up git-ignored things often installed
 ### (for now node_modules)
-echo ""
-echo "Removing node_modules folder (if it exists)"
-rm -r $REPO_DIR/node_modules
+#echo ""
+#echo "Removing node_modules folder (if it exists)"
+#rm -r $REPO_DIR/node_modules
 
 echo ""
 echo "Containers, images and volume removed!"
