@@ -1,1 +1,30 @@
-[]
+[
+  "dev-proxy.kat",
+  [
+    4000
+  ],
+  "dev-iframer",
+  [
+    4001
+  ],
+  "dev-world-map-backend",
+  [
+    4002
+  ],
+  "dev-countries-info-backend-kat",
+  [
+    4003
+  ],
+  "dev-countries-info-db-kat",
+  [
+    4004
+  ],
+  "dev-capitals-backend",
+  [
+    4005
+  ],
+  "dev-capitals-db",
+  [
+    4006
+  ]
+]
