@@ -1,7 +1,7 @@
 <?php
-    $servername = "localhost";
+    $servername = "dev-country-info-db-work-ps";
     $username = "root";
-    $password = "mysql";
+    $password = "";
     $database = "countries";
 ?><!DOCTYPE html>
 <html lang="en">
