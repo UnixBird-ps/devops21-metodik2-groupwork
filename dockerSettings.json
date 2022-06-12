@@ -3,15 +3,15 @@
   [
     4000
   ],
-  "dev-iframer-work-ps",
+  "dev-iframer",
   [
     4001
   ],
-  "dev-world-map-backend-tariq",
+  "dev-world-map-backend",
   [
     4002
   ],
-  "dev-country-info-backend-work-ps",
+  "dev-country-info-backend",
   [
     4003
   ],
@@ -19,11 +19,11 @@
   [
     4004
   ],
-  "dev-capitals-backend-work-tariq",
+  "dev-capitals-backend",
   [
     4005
   ],
-  "dev-capitals-db-work-tariq",
+  "dev-capitals-db",
   [
     4006
   ]
