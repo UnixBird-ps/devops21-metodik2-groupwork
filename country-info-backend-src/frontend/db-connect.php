@@ -7,8 +7,8 @@ if(count(get_included_files()) ==1 && !isset($_GET["populateDB"])){
 // Connection details for MySQL server
 $host = 'devops21-metodik2-groupwork-dev-country-info-db-work-ps'; // change to name of container
 $port = '3306';
-$user = 'root';
-$pass = '';
+$user = 'countries-user';
+$pass = 'mY_c0o7_$3cret';
 $charset = 'utf8mb4';
 
 // Options
