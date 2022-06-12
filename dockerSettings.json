@@ -3,12 +3,28 @@
   [
     4000
   ],
-  "dev-capitals-backend-final-check",
+  "dev-iframer",
   [
     4001
   ],
-  "dev-capitals-db-work-ps-kat",
+  "dev-worldmap-backend",
   [
     4002
+  ],
+  "dev-country-info-backend",
+  [
+    4003
+  ],
+  "dev-country-info-db",
+  [
+    4004
+  ],
+  "dev-capitals-backend-final-check",
+  [
+    4005
+  ],
+  "dev-capitals-db-work-ps-kat",
+  [
+    4006
   ]
 ]
