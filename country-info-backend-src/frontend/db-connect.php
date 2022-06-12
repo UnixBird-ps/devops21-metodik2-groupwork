@@ -8,7 +8,7 @@ if(count(get_included_files()) ==1 && !isset($_GET["populateDB"])){
 $host = 'dev-country-info-db-work-ps'; // change to name of container
 $port = 3306;
 $user = 'countries-user';
-$pass = 'mYc0o73cret';
+$pass = '';
 $charset = 'utf8mb4';
 
 // Options
