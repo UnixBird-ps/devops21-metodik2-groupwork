@@ -11,7 +11,7 @@ FROM mariadb:10.8.3
 #COPY ./country-info-db-src/secrets/* /run/secrets/
 
 #ENV MYSQL_ROOT_HOST=localhost
-#ENV MYSQL_ROOT_HOST=%
+ENV MYSQL_ROOT_HOST=%
 ENV MYSQL_PORT_NUMBER=$PORT
 ENV MYSQL_CHARACTER_SET=utf8mb4
 #ENV MYSQL_DATABASE=countries
