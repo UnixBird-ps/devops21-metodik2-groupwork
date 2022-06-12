@@ -18,8 +18,8 @@ We will start with
   * template-dev (for DevOps team's use)  
   * dev-iframer (for iframer team)
   * dev-world-map-backend (for world-map team)
-  * dev-countries-backend (for countries team)
-  * dev-countries-db (db for countries team)
+  * dev-country-info-backend (for countries team)
+  * dev-country-info-db (db for countries team)
   * dev-capitals-backend (for capitals team)
   * dev-capitals-db (db for capitals team)
   * dev-proxy 
