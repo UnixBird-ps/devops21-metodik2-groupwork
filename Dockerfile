@@ -21,4 +21,4 @@ ENV MYSQL_ALLOW_EMPTY_ROOT_PASSWORD=yes
 
 #EXPOSE $PORT
 
-RUN mysqld --port=$PORT
+CMD mariadbd --port=$PORT
