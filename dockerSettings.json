@@ -1,5 +1,5 @@
 [
-  "dev-proxy-work-ps-kat",
+  "dev-proxy",
   [
     4000
   ],
@@ -19,7 +19,7 @@
   [
     4004
   ],
-  "dev-capitals-backend-final-check",
+  "dev-capitals-backend",
   [
     4005
   ],
