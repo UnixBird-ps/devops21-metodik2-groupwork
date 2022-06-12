@@ -1,8 +1,6 @@
 # devops21-metodik2-groupwork
 
-A school assignment group work on CI/CD for course DevOps Metodik 2 using Docker.  
-  
-  
+A school assignment group work on CI/CD for course DevOps Metodik 2 using Docker.    
   
 Hello developer!
 
@@ -16,8 +14,12 @@ This means that we need a new development environment and build system where the
 For this purpose we have chosen Docker in conjunction with our own setup for automating Docker.
 
 We will start with 
-* different teams in the same main project having the code for their service in specific branches.
-* your team can create as many branches you want, but you start with branching out the main branch and call your base branch "main-service-name".
+* different teams in the same main project having the code for their service in team specific branches. The following are the protected branches:
+  * template-dev (for DevOps team's use)  
+  * dev-iframer (for iframer team)
+  * dev-world-map-backend (for world-map team)
+  * dev-
+* your team can create as many branches you want, but you start with branching out from your  and call your base branch "main-service-name".
 * then you can create dev and feature branches according to the same naming convention (dev-service-name, dev-service-name-feature-some-feature etc) from your specific main branch.
 
 **Note:** Should we need to separate the code further we might move each service into separate repositories. But we will wait with doing that until the project is big enough.
