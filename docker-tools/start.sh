@@ -3,18 +3,23 @@
 
 # Get the dir path of the dir where this script is located
 DIRNAME=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+echo "DIRNAME: $DIRNAME"
 
 # Get the repo dir path
 REPO_DIR="$(dirname "$DIRNAME")"
+echo "REPO_DIR: $REPO_DIR"
 
 # Cd to the dir where this script is located
 cd $DIRNAME
+echo "Current dir: $( pwd )"
 
 ### get the name of the repository
 REPO_NAME=$(basename -s .git `git config --get remote.origin.url`)
+echo "REPO_NAME: $REPO_NAME"
 
 ## get the name of the checked out branch
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+echo "BRANCH_NAME: $BRANCH_NAME"
 
 ## dockerSettings.json file path
 DOCKER_SETTINGS_FILE="$REPO_DIR/dockerSettings.json"
@@ -33,7 +38,7 @@ if [ ! -f "$DOCKER_SETTINGS_FILE" ]; then
 fi
 
 ## copy dockerSettings.json into the copy-to-docker-folder
-rm copy-to-docker-container/dockerSettings.json
+rm copy-to-docker-container/dockerSettings.json 2> /dev/null
 cp $DOCKER_SETTINGS_FILE copy-to-docker-container/dockerSettings.json
 
 echo ""
@@ -60,20 +65,6 @@ docker run \
 -e GIT_BRANCH_NAME=$BRANCH_NAME \
 $REPO_NAME-git-cloner
 
-### start the syncer container
-### build image from Dockerfile
-docker build -f syncer.Dockerfile -t $REPO_NAME-syncer .
-
-### run the syncer image as container
-echo ""
-echo "Starting syncer!"
-docker run -d \
---name $REPO_NAME-syncer \
---mount type=bind,source="$DIRNAME/copy-to-docker-container",target=/app \
---mount type=bind,source="$REPO_DIR",target=/repo-bind-mount \
--v $REPO_NAME-storage:/storage \
-$REPO_NAME-syncer
-
 if [ $? -ne 0 ]; then
   # There was an error with git cloner
   # Probably no SSH key - the JS script will
@@ -84,15 +75,28 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-### remove container
+### remove cloner container
 echo "REMOVING THE CONTAINER $REPO_NAME-git-cloner";
 docker container rm -f $REPO_NAME-git-cloner
 
-### remove image
+### remove cloner image
 echo ""
 echo "REMOVING THE IMAGE $REPO_NAME-git-cloner";
 docker image rm -f $REPO_NAME-git-cloner
 echo ""
+
+### build syncer image from Dockerfile
+docker build -f syncer.Dockerfile -t $REPO_NAME-syncer .
+
+### run syncer container
+echo ""
+echo "Starting syncer!"
+docker run -d \
+--name $REPO_NAME-syncer \
+--mount type=bind,source="$DIRNAME/copy-to-docker-container",target=/app \
+--mount type=bind,source="$REPO_DIR",target=/repo-bind-mount \
+-v $REPO_NAME-storage:/storage \
+$REPO_NAME-syncer
 
 ### create a container based on the official docker image
 ### that runs docker (mounted as a socket)
