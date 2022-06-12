@@ -1,14 +1,14 @@
 const path = require('path');
 const mongoose = require('mongoose');
 
-const connection = 'mongodb://127.0.0.1:4006/capitals-db';
+const connection = 'mongodb://dev-capitals-db:4006/capitals-db';
 
 function dbConnectWithRetry() {
   return new Promise(res => {
     let connect = () => {
       mongoose.connect(connection, err => {
-        console.log('Connection error to db, retrying in 0.2 second');
-        err ? setTimeout(connect, 200) : res();
+        console.log('Connection error to db, retrying in 1 second');
+        err ? setTimeout(connect, 1000) : res();
       });
     };
     connect();

@@ -1,15 +1,6 @@
+# start with a debian node container
+FROM node:16.15-buster
 
-FROM node:16.15.0-alpine3.15
-
-WORKDIR /app/
-
-COPY ./capitals-backend-source/package*.json /app/
-
-RUN cd /app \
-&& npm install
-
-COPY ./capitals-backend-source/ /app/
-
-CMD \
-cd /app \
-&& npm run dev
+# Run necessary start commands
+# npm run dev was requested by developers since this will allow them to work with vite & see changes as soon as they reload the page.
+CMD npm install && npm run dev
