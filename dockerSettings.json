@@ -1,29 +1,29 @@
 [
-  "dev-proxy-work-ps",
+  "dev-proxy-kat",
   [
     4000
   ],
-  "dev-iframer-work-ps",
+  "dev-iframer",
   [
     4001
   ],
-  "dev-world-map-backend-work-ps",
+  "dev-world-map-backend",
   [
     4002
   ],
-  "dev-country-info-backend-work-ps",
+  "dev-country-info-backend-kat",
   [
     4003
   ],
-  "dev-country-info-db-work-ps",
+  "dev-country-info-db-kat",
   [
     4004
   ],
-  "dev-capitals-backend-work-ps",
+  "dev-capitals-backend",
   [
     4005
   ],
-  "dev-capitals-db-work-ps",
+  "dev-capitals-db",
   [
     4006
   ]
